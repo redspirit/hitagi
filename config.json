@@ -1,0 +1,11 @@
+{
+    "http_port": 3300,
+    "ws_port": 8124,
+    "public_path": "/public",
+    "file_cache" : 0,
+    "mongo": {
+        "server": "localhost",
+        "port": "27017",
+        "database": "engine"
+    }
+}
