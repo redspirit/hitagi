@@ -7,8 +7,6 @@
  *  @widgetToggle - Directive to toggle widgets
  *  @widgetClose - Directive to close widget
  *  @toggleLeftSidebar - Left Sidebar Directive to toggle sidebar navigation
- *  @toggleProfile - Show/Hide Profile View
- *  @toggleRightSidebar - Right Sidebar Directive to toggle sidebar navigation
  *  @navToggleSub - Directive to toggle sub-menu down
  *  @slider - Directive to run bootstrap sliders
  *  @gaugejs - Directive for the gauge graph
@@ -81,37 +79,6 @@ function toggleLeftSidebar() {
         }
     };
 }
-
-/*
- * @toggleProfile - Show/Hide Profile View
- */
-function toggleProfile() {
-    return {
-        restrict: 'A',
-        template: '<button ng-click="toggleProfile()" type="button" class="btn btn-default" id="toggle-profile"><i class="icon-user"></i></button>',
-        controller: function($scope, $element) {
-            $scope.toggleProfile = function() {
-                $('.sidebar-profile').slideToggle();
-            }
-        }
-    };
-};
-
-/*
- * @toggleRightSidebar - Right Sidebar Directive to toggle sidebar navigation
- */
-function toggleRightSidebar() {
-    return {
-        restrict: 'A',
-        template: '<button ng-click="toggleRight()" class="sidebar-toggle" id="toggle-right"><i class="fa fa-indent"></i></button>',
-        controller: function($scope, $element) {
-            $scope.toggleRight = function() {
-                $('#sidebar-right').toggleClass("sidebar-right-open");
-                $("#toggle-right .fa").toggleClass("fa-indent fa-dedent");
-            }
-        }
-    };
-};
 
 /**
  * @navToggleSub - Directive to toggle sub-menu down
@@ -292,50 +259,6 @@ function fullscreenWidget() {
     }
 };
 
-
-/**
- * @toggleSettings - Directive to toggle settings widgets for DEMO
- */
-function toggleSettings() {
-    return {
-        restrict: 'A',
-        link: function(scope, element) {
-            element.click(function() {
-                if ($(this).hasClass('open')) {
-                    $('#config').animate({
-                        "right": "-205px"
-                    }, 150);
-                    $(this).removeClass('open').addClass('closed');
-                } else {
-                    $("#config").animate({
-                        "right": "0px"
-                    }, 150);
-                    $(this).removeClass('closed').addClass('open');
-                }
-            });
-        }
-    }
-};
-
-/**
- * @switchTheme - Directive to switch theme colors for DEMO
- */
-function switchTheme() {
-    return {
-        restrict: 'A',
-        link: function(scope, element) {
-            element.click(function() {
-                $('#main-wrapper').attr('class', '');
-                var themeValue = $(this).data('theme');
-                $('#main-wrapper').addClass(themeValue);
-            });
-        }
-    }
-};
-
-
-
-
 /*
  * Pass functions to module
  */
@@ -345,8 +268,6 @@ angular
     .directive('widgetToggle', widgetToggle)
     .directive('widgetClose', widgetClose)
     .directive('toggleLeftSidebar', toggleLeftSidebar)
-    .directive('toggleProfile', toggleProfile)
-    .directive('toggleRightSidebar', toggleRightSidebar)
     .directive('navToggleSub', navToggleSub)
     .directive('slider', slider)
     .directive('gauge', gauge)
@@ -354,5 +275,3 @@ angular
     .directive('ichecks', ichecks)
     .directive('fullscreenMode', fullscreenMode)
     .directive('fullscreenWidget', fullscreenWidget)
-    .directive('toggleSettings', toggleSettings)
-    .directive('switchTheme', switchTheme)

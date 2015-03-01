@@ -310,9 +310,6 @@ canvas {
   background-color: #fbfbfb;
   color: #373737;
 }
-#header .profile ul > li:first-child {
-  padding: 10px;
-}
 #header .profile ul > li h5,
 #header .profile ul > li p {
   font-size: 0.813em;
