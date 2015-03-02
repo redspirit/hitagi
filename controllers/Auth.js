@@ -1,17 +1,21 @@
-/**
- * Created by Alexey Tayanchin on 25.07.14.
- */
+
+
+
 
 
 exports.register = function(req, res){
 
-    res.send('this is me register GEEET!!!');
+    console.log(req.body);
+
+    res.send('this is me register !!!');
 
 };
 
-exports.register_post = function(req, res){
+exports.login = function(req, res){
 
-    res.send('this is me register POOOST!!!');
+    console.log(req.query);
+
+    res.send('this is me login!!!');
 
 };
 

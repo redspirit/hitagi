@@ -5,8 +5,8 @@
 var server = require('./core/server.js');
 
 var routes = {
-    'get /registerz':                   'auth.register',
-    'get /authz':                       'auth.getToken',
+    'post /auth/register':                   'auth.register',
+    'get /auth/login':                       'auth.login',
 
     'all /api/:controller/:action':    ':controller.:action'
 };

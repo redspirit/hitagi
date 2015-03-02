@@ -9,6 +9,7 @@ var router = require('./router.js');
 var restify = require('restify');
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({ port: config.ws_port });
+var queryString = require('querystring');
 
 var server = restify.createServer({
     name: 'myapp',
@@ -24,6 +25,17 @@ server.pre(restify.pre.sanitizePath());
 //server.use(restify.fullResponse());
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
+server.use(function(req, res, next){
+
+    if(req.method == 'GET')
+        return next();
+
+    if(typeof req.body == 'string')
+        req.body = queryString.parse(req.body);
+
+    next();
+
+});
 
 
 exports.Start = function(httpRoutes, wsRoutes){

@@ -28,9 +28,8 @@ exports.httpRouting = function(server, httpRoutes, staticServer) {
         var method = req.method.toLowerCase();
         var cmd = httpRoutes[method + ' ' + routePath] || httpRoutes['all ' + routePath];
 
-        console.log('params', cmd);
+        //console.log('params', cmd);
         //console.log('query', req);
-
 
 
         if(!cmd)
@@ -59,7 +58,7 @@ exports.httpRouting = function(server, httpRoutes, staticServer) {
         }
 
 
-        console.log(ctrl, action);
+        //console.log(ctrl, action);
 
 
         if(typeof Controllers[ctrl] != 'object')
