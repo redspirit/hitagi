@@ -9,7 +9,7 @@ var dataset = require('./dataset.js');
 
 // подключаем файлы контроллеров
 var Controllers = {};
-var ctrlsDir = __dirname + './../controllers/';
+var ctrlsDir = __dirname + '/../controllers/';
 var files = fs.readdirSync(ctrlsDir);
 files.forEach(function(file){
     var name = file.split('.')[0].toLowerCase();
