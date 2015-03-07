@@ -1,6 +1,6 @@
-
-
-
+/**
+ * Created by Alexey Tayanchin on 15.07.14.
+ */
 
 
 exports.register = function(req, res){
@@ -11,7 +11,7 @@ exports.register = function(req, res){
 
 };
 
-exports.login = function(req, res){
+exports.confirm = function(req, res){
 
     console.log(req.query);
 
@@ -20,14 +20,26 @@ exports.login = function(req, res){
 };
 
 
-exports.getToken = function(req, res){
+exports.forgot_password = function(req, res){
 
-    res.send('this is token city');
+    res.send('Функционал не реализован');
 
 };
 
-exports.ats = function(req, res){
+exports.get_token = function(req, res){
 
-    res.send('ATS is my life');
+    res.send('Функционал не реализован');
+
+};
+
+exports.refresh_token = function(req, res){
+
+    res.send('Функционал не реализован');
+
+};
+
+exports.remove_token = function(req, res){
+
+    res.send('Функционал не реализован');
 
 };

@@ -4,71 +4,80 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var moment = require('moment');
-var _ = require('underscore');
+var tools = require('../core/tools.js');
+//var moment = require('moment');
+//var _ = require('underscore');
 
 var UserSchema = new Schema({
-    phone: {
-        type: String,
-        required: true
-    },
-    token: {
+    alias: {                // уникальный идентификатор юзера, не обязателен
         type: String
     },
-    rtoken: {
+    name: {                 // текстовое имя
         type: String
     },
-    name: {
-        type: String,
-        default: ''
+    email: {                // личный емейл
+        type: String
     },
-    avatar: {
-        type: String,
-        default: ''
+    password: {
+        type: String
+    },
+    status: {               // статус
+        type: Number
     },
     last_login: {
-        type: String
+        type: Date
     },
     reg_date: {
+        type: Date
+    },
+    avatar: {
         type: String
     },
-    region: {				// код региона
-        type: String
-    },
-    active: {               // активен ли водитель (можно заблокировать)
-        type: Boolean,
-        default: true
+    token: {                // хэш с oauth2 токенами
+        type: Schema.Types.Mixed,
+        default: {}
     }
 });
 
 
 
-UserSchema.methods.changeRating = function(value, reason, cb){
-    var stat = _.clone(this.stat);
+UserSchema.statics.register = function(data, cb){
+    var User = this;
 
-    stat.rating += value;
 
-    console.log('У пользователя', this.phone, 'изменился рейтинг на ', value, 'по причине', reason);
-    var rate = new exports.Rating({
-        user: this._id,
-        date: exports.now(),
-        value: value,
-        reason: reason
-    });
-
-    this.stat = stat;
-
-    rate.save(cb);
-    this.save();
-};
-
-UserSchema.methods.sms = function(message, cb){
+    tools.md5('hello')
 
 };
 
-UserSchema.methods.now = function(){
-    var zone = this.timezone;
-    return moment().utc().zone(-zone * 60).format();
+UserSchema.methods.confirm = function(cb){
+    var user = this;
+
+
 };
+
+UserSchema.methods.forgot_password = function(cb){
+    var user = this;
+
+
+};
+
+UserSchema.methods.get_token = function(cb){
+    var user = this;
+
+
+};
+
+UserSchema.methods.refresh_token = function(cb){
+    var user = this;
+
+
+};
+
+UserSchema.methods.remove_token = function(cb){
+    var user = this;
+
+
+};
+
 
 exports.model = UserSchema;
