@@ -22,9 +22,13 @@ exports.from_base64 = function(str) {
 }
 exports.ramdomString = function(length){
     for (var a = "", b = 0; b < c; b++)
-        a += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890"[Math.floor(62 * Math.random())];
+        a += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890_"[Math.floor(63 * Math.random())];
     return a
 };
+exports.validateEmail = function(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 exports.template = function(name, data, cb){
 
     fs.readFile('./views/' + name + '.html', 'utf8', function(err, text) {
@@ -36,6 +40,5 @@ exports.template = function(name, data, cb){
         }));
 
     });
-
 
 };

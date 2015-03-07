@@ -5,7 +5,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var tools = require('../core/tools.js');
-var email = require('../core/email.js');
 var CONST = require('../core/const.js');
 //var moment = require('moment');
 //var _ = require('underscore');
@@ -40,6 +39,9 @@ var UserSchema = new Schema({
     api_key: {
         type: String
     },
+    email_code: {
+        type: String
+    },
     token: {                // хэш с oauth2 токенами
         type: Schema.Types.Mixed,
         default: {}
@@ -47,47 +49,41 @@ var UserSchema = new Schema({
 });
 
 
-//email.send('redspirit@live.ru', {name: 'Вася ппупкинс', subject: 'Успешная регистрация'}, 'mail/register');
-
 
 UserSchema.statics.register = function(data, cb){
     var User = this;
 
-    var name = data.name;
-    var email = data.email;
-    var password = data.password;
-
-    User.findOne({email: email}, function(err, checkUser){
+    User.findOne({email: data.email}, function(err, checkUser){
 
         if(checkUser)
-            return cb({error: 'email'});
-
+            return cb(email, null);
 
         var user = new User({
-            name: name,
-            email: email,
-            password: tools.sha1(password),
+            name: data.name,
+            email: data.email,
+            password: tools.sha1(data.password),
             status: CONST.USER_STATUS_NEW,
             reg_date: Date.now(),
-            api_key: tools.ramdomString(12)
+            api_key: tools.ramdomString(12),
+            email_code: tools.ramdomString(24)
         });
 
-        user.save(function(err, doc){
-
-            if(err)
-                return cb({error: err});
-
-            cb(doc);
-
-        });
+        user.save(cb);
 
     });
 
 };
 
-UserSchema.methods.confirm = function(cb){
-    var user = this;
+UserSchema.statics.confirm = function(code, cb){
+    var User = this;
 
+    User.findOne({email_code: code}, function(err, user){
+
+        user.status = CONST.USER_STATUS_REGULAR;
+        user.email_code = '';
+        user.save(cb);
+
+    });
 
 };
 
@@ -100,6 +96,14 @@ UserSchema.methods.forgot_password = function(cb){
 UserSchema.methods.get_token = function(cb){
     var user = this;
 
+
+    user.token = {
+        access_token: tools.ramdomString(16),
+        refresh_token: tools.ramdomString(8),
+        expires_in: 86400
+    };
+
+    user.save(cb);
 
 };
 
