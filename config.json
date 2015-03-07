@@ -6,6 +6,12 @@
     "mongo": {
         "server": "localhost",
         "port": "27017",
-        "database": "engine"
+        "database": "hitagi"
+    },
+    "mail": {
+        "service": "yandex",
+        "from": "checkpointz@yandex.ru",
+        "user": "checkpointz",
+        "pass": "lollipop"
     }
 }

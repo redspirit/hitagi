@@ -12,8 +12,8 @@ var wss = new WebSocketServer({ port: config.ws_port });
 var queryString = require('querystring');
 
 var server = restify.createServer({
-    name: 'myapp',
-    version: '1.0.0'
+    name: 'hitagi',
+    version: '0.0.1'
 });
 var sockUsers = {};
 var sockRooms = {};
