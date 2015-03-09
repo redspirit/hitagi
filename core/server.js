@@ -4,6 +4,7 @@
 
 var config = require('./../config.json');
 var router = require('./router.js');
+var mediators = require('./middleware.js');
 var tools = require('./tools.js');
 
 
@@ -26,17 +27,8 @@ server.pre(restify.pre.sanitizePath());
 //server.use(restify.fullResponse());
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
-server.use(function(req, res, next){
-
-    if(req.method == 'GET')
-        return next();
-
-    if(typeof req.body == 'string')
-        req.body = queryString.parse(req.body);
-
-    next();
-
-});
+server.use(mediators.prepareBody);
+server.use(mediators.checkToken);
 
 server.on('uncaughtException', function (req, res, route, error) {
 

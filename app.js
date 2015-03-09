@@ -14,6 +14,9 @@ var routes = {
     'post /auth/out':                   'auth.remove_token',    // сделать токен недействительным
 
 
+    'get /test':                        'user.test',
+
+
 
     'all /api/:controller/:action':     ':controller.:action'
 };

@@ -5,7 +5,6 @@
 var data = require('./../core/dataset.js');
 var emailService = require('../core/email.js');
 var tools = require('../core/tools.js');
-var _ = require('underscore');
 
 
 exports.register = function(req, res){

@@ -93,6 +93,12 @@ UserSchema.statics.confirm = function(code, cb){
 
 };
 
+UserSchema.statics.byToken = function(token, cb){
+    var User = this;
+    // игнорирует новых и заблокированных пользователей
+    User.findOne({'token.access_token': token, status: {'$gte': CONST.USER_STATUS_REGULAR}}, cb);
+};
+
 UserSchema.methods.forgot_password = function(cb){
     var user = this;
 
