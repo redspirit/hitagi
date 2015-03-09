@@ -9,9 +9,9 @@ var routes = {
     'get /auth/confirm':                'auth.confirm',         // подтвердить емейл пользователя
     'get /auth/forgot':                 'auth.forgot_password', // восстановить пароль через емейл
 
-    'get /auth/token':                  'auth.get_token',       // получить токен доступа по паролю
-    'get /auth/refresh':                'auth.refresh_token',   // обновить токен
-    'get /auth/out':                    'auth.remove_token',    // сделать токен недействительным
+    'post /auth/token':                 'auth.get_token',       // получить токен доступа по паролю
+    'post /auth/refresh':               'auth.refresh_token',   // обновить токен
+    'post /auth/out':                   'auth.remove_token',    // сделать токен недействительным
 
 
 

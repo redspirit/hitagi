@@ -40,12 +40,8 @@ server.use(function(req, res, next){
 
 server.on('uncaughtException', function (req, res, route, error) {
 
-    console.log('Ошибка на адресе:', route.spec.path);
-    console.log('uncaughtException', error.stack);
-
-    tools.template('internal_error', {}, function(text){
-        res.send(500, text);
-    });
+    console.error('Ошибка на адресе:', route.spec.path, error.stack);
+    tools.template('internal_error', {}, res);
 
 });
 

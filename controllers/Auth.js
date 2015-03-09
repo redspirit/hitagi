@@ -81,18 +81,52 @@ exports.forgot_password = function(req, res){
 
 exports.get_token = function(req, res){
 
-    res.send('Функционал не реализован');
+    var email = req.query.email || req.body.email;
+    var password = req.query.password || req.body.password;
+
+    data.User.get_token(email, password, function(err, user){
+
+        if(err)
+            return res.send({error: err});
+
+        res.send(user.token);
+
+        console.info('Пользователь', user.email, 'получил новый токен');
+
+    });
 
 };
 
 exports.refresh_token = function(req, res){
 
-    res.send('Функционал не реализован');
+    var refresh = req.query.refresh || req.body.refresh;
+
+    data.User.refresh_token(refresh, function(err, user){
+
+        if(err)
+            return res.send({error: err});
+
+        res.send(user.token);
+
+        console.info('Пользователь', user.email, 'обновил токен');
+
+    });
 
 };
 
 exports.remove_token = function(req, res){
 
-    res.send('Функционал не реализован');
+    var refresh = req.query.refresh || req.body.refresh;
+
+    data.User.remove_token(refresh, function(err, user){
+
+        if(err)
+            return res.send({error: err});
+
+        res.send({status: 'ok'});
+
+        console.info('Пользователь', user.email, 'удалил свой токен');
+
+    });
 
 };

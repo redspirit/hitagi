@@ -83,7 +83,7 @@ UserSchema.statics.confirm = function(code, cb){
     User.findOne({email_code: code, status: CONST.USER_STATUS_NEW}, function(err, user){
 
         if(!user)
-            return cb('not found', null);
+            return cb('user not found', null);
 
         user.status = CONST.USER_STATUS_REGULAR;
         user.email_code = '';
@@ -99,29 +99,60 @@ UserSchema.methods.forgot_password = function(cb){
 
 };
 
-UserSchema.methods.get_token = function(cb){
-    var user = this;
+UserSchema.statics.get_token = function(email, pass, cb){
+    var User = this;
+    var password =  tools.sha1(pass);
 
+    User.findOne({email: email, password: password}, function(err, user) {
 
-    user.token = {
-        access_token: tools.ramdomString(16),
-        refresh_token: tools.ramdomString(8),
-        expires_in: 86400
-    };
+        if(!user)
+            return cb('user not found', null);
 
-    user.save(cb);
+        user.token = {
+            access_token: tools.ramdomString(24),
+            refresh_token: tools.ramdomString(16),
+            expires_in: 86400
+        };
+
+        user.save(cb);
+
+    });
 
 };
 
-UserSchema.methods.refresh_token = function(cb){
-    var user = this;
+UserSchema.statics.refresh_token = function(refresh, cb){
+    var User = this;
 
+    User.findOne({'token.refresh_token': refresh}, function(err, user) {
+
+        if(!user)
+            return cb('user not found', null);
+
+        user.token = {
+            access_token: tools.ramdomString(24),
+            refresh_token: tools.ramdomString(16),
+            expires_in: 86400
+        };
+
+        user.save(cb);
+
+    });
 
 };
 
-UserSchema.methods.remove_token = function(cb){
-    var user = this;
+UserSchema.statics.remove_token = function(cb){
+    var User = this;
 
+    User.findOne({'token.refresh_token': refresh}, function(err, user) {
+
+        if(!user)
+            return cb('user not found', null);
+
+        user.token = {};
+
+        user.save(cb);
+
+    });
 
 };
 
