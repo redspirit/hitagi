@@ -9,6 +9,7 @@ var tools = require('./tools.js');
 
 
 var restify = require('restify');
+var CookieParser = require('restify-cookies');
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({ port: config.ws_port });
 var queryString = require('querystring');
@@ -27,6 +28,7 @@ server.pre(restify.pre.sanitizePath());
 //server.use(restify.fullResponse());
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
+server.use(CookieParser.parse);
 server.use(mediators.prepareBody);
 server.use(mediators.checkToken);
 

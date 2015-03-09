@@ -4,12 +4,17 @@
  */
 
 var data = require('./dataset.js');
-var CONST = require('./const.js').data;
+var tools = require('./tools.js');
+//var CONST = require('./const.js').data;
 
 
 exports.checkToken = function(req, res, next){
 
     var token = req.query.access_token || req.body.access_token || req.headers.access_token;
+
+    if(token || req.cookies.access_token)
+        token = tools.decrypt(req.cookies.access_token);
+
 
     req.user = null;
 

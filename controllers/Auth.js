@@ -82,11 +82,24 @@ exports.get_token = function(req, res){
 
     var email = req.query.email || req.body.email;
     var password = req.query.password || req.body.password;
+    var saveCookie = req.query.cookie == 'true';
+
 
     data.User.get_token(email, password, function(err, user){
 
         if(err)
             return res.send({error: err});
+
+        if(saveCookie)
+            res.setCookie('access_token', tools.encrypt(user.token.access_token), {
+                //domain:'localhost:3300',
+                maxAge: 60000,
+                path: '/',
+                secure: true
+            });
+
+
+        console.log(res.header('Set-Cookie'));
 
         res.send(user.token);
 

@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "dependencies": {
         "restify": "2.8.5",
+        "restify-cookies" : "0.1.1",
         "moment": "2.8.4",
         "mongoose": "3.8.12",
         "request": "2.39.0",

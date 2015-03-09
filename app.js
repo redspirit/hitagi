@@ -10,6 +10,7 @@ var routes = {
     'get /auth/forgot':                 'auth.forgot_password', // восстановить пароль через емейл
 
     'post /auth/token':                 'auth.get_token',       // получить токен доступа по паролю
+    'get /auth/token':                 'auth.get_token',       // получить токен доступа по паролю
     'post /auth/refresh':               'auth.refresh_token',   // обновить токен
     'post /auth/out':                   'auth.remove_token',    // сделать токен недействительным
 
