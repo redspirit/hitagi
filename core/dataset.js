@@ -16,12 +16,6 @@ db.once('open', function callback () {
 });
 
 
-exports.const = {
-    DRIVER_STATUS_HIDE:   0,
-    DRIVER_STATUS_FINDER: 1,
-    DRIVER_STATUS_WORK:   2
-};
-
 var modelsDir = __dirname + '/../models/';
 var models = fs.readdirSync(modelsDir);
 

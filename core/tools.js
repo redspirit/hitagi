@@ -20,7 +20,7 @@ exports.to_base64 = function(data) {
 exports.from_base64 = function(str) {
     return new Buffer(str, 'base64').toString('binary');
 }
-exports.ramdomString = function(length){
+exports.ramdomString = function(c){
     for (var a = "", b = 0; b < c; b++)
         a += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890_"[Math.floor(63 * Math.random())];
     return a
@@ -35,9 +35,24 @@ exports.template = function(name, data, cb){
         if (err)
             return cb({error: err});
 
-        cb(ejs.render(text, data, {
+        var body = ejs.render(text, data, {
             delimiter: '?'
-        }));
+        });
+
+        // отдает результат в RES
+        if (typeof cb == 'object') {
+
+            cb.writeHead(200, {
+                'Content-Length': Buffer.byteLength(body),
+                'Content-Type': 'text/html'
+            });
+            cb.write(body);
+            return cb.end();
+
+        }
+
+        if(typeof cb == 'function')
+            return cb(body);
 
     });
 

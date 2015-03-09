@@ -21,7 +21,7 @@ exports.send = function(to, data, template){
     tools.template(template, data, function(text){
 
         var mailOptions = {
-            from: config.mail.from,
+            from: config.mail.from_name + ' <' + config.mail.from + '>',
             to: to,
             subject: data.subject,
             html: text

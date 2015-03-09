@@ -11,6 +11,7 @@
     "mail": {
         "service": "yandex",
         "from": "checkpointz@yandex.ru",
+        "from_name": "Сервис чатов Hitagi",
         "user": "checkpointz",
         "pass": "lollipop"
     }

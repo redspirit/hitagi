@@ -4,6 +4,7 @@
 
 var config = require('./../config.json');
 var router = require('./router.js');
+var tools = require('./tools.js');
 
 
 var restify = require('restify');
@@ -37,6 +38,16 @@ server.use(function(req, res, next){
 
 });
 
+server.on('uncaughtException', function (req, res, route, error) {
+
+    console.log('Ошибка на адресе:', route.spec.path);
+    console.log('uncaughtException', error.stack);
+
+    tools.template('internal_error', {}, function(text){
+        res.send(500, text);
+    });
+
+});
 
 exports.Start = function(httpRoutes, wsRoutes){
 

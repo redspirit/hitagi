@@ -5,9 +5,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var tools = require('../core/tools.js');
-var CONST = require('../core/const.js');
+var CONST = require('../core/const.js').data;
 //var moment = require('moment');
 //var _ = require('underscore');
+
 
 var UserSchema = new Schema({
     alias: {                // уникальный идентификатор юзера, не обязателен
@@ -53,10 +54,12 @@ var UserSchema = new Schema({
 UserSchema.statics.register = function(data, cb){
     var User = this;
 
+    //console.log(data);
+
     User.findOne({email: data.email}, function(err, checkUser){
 
         if(checkUser)
-            return cb(email, null);
+            return cb('email', null);
 
         var user = new User({
             name: data.name,
@@ -77,7 +80,10 @@ UserSchema.statics.register = function(data, cb){
 UserSchema.statics.confirm = function(code, cb){
     var User = this;
 
-    User.findOne({email_code: code}, function(err, user){
+    User.findOne({email_code: code, status: CONST.USER_STATUS_NEW}, function(err, user){
+
+        if(!user)
+            return cb('not found', null);
 
         user.status = CONST.USER_STATUS_REGULAR;
         user.email_code = '';

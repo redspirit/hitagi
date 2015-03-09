@@ -3,7 +3,7 @@
  */
 
 var data = require('./../core/dataset.js');
-var email = require('../core/email.js');
+var emailService = require('../core/email.js');
 var tools = require('../core/tools.js');
 var _ = require('underscore');
 
@@ -16,6 +16,8 @@ exports.register = function(req, res){
     var email = d.email;
     var password = d.password;
 
+
+
     if(!name)
         return res.send({error: 'Не указано имя пользователя'});
 
@@ -26,17 +28,23 @@ exports.register = function(req, res){
         return res.send({error: 'Не указан пароль пользователя'});
 
 
-
     data.User.register(d, function(err, user){
 
         if(err)
             return res.send({error: err});
 
 
+        var mailData = {
+            code: user.email_code,
+            name: user.name,
+            subject: 'Успешная регистрация'
+        };
 
-        email.send(user.email, _.extend(user, {subject: 'Успешная регистрация'}), 'mail/register');
+        emailService.send(user.email, mailData, 'mail/register');
 
         res.send({status: 'ok'});
+
+        console.info('Регистрация пользователя', email);
 
     });
 
@@ -47,17 +55,20 @@ exports.confirm = function(req, res){
     var code = req.query.code;
     var redirect = req.query.redirect;
 
+    if(!redirect) redirect = '/';
 
     data.User.confirm(code, function(err, user){
 
+        if(err)
+            return tools.template('confirm_error', {}, res);
 
-        // todo редиректим на указанный урл
 
+        res.header('Location', redirect);
+        res.send(302);
+
+        console.info('Пользователь', user.email, 'подтвержден');
 
     });
-
-
-    res.send('this is me login!!!');
 
 };
 
