@@ -92,14 +92,12 @@ exports.get_token = function(req, res){
 
         if(saveCookie)
             res.setCookie('access_token', tools.encrypt(user.token.access_token), {
-                //domain:'localhost:3300',
-                maxAge: 60000,
+                maxAge: 600000,
                 path: '/',
-                secure: true
+                //secure: false,
+                httpOnly: true
             });
 
-
-        console.log(res.header('Set-Cookie'));
 
         res.send(user.token);
 
