@@ -53,23 +53,26 @@
                     </div>
                     <div class="panel-body">
                         <p >Уже зарегистрированы? <a href="pages-login.html"><strong>Вход</strong></a></p>
-                        <form role="form" action="/auth/register" method="post">
-                            <div class="form-group">
+                        <form role="form" id="form" method="post" action="javascript:void(0);" onsubmit="ajax_register()">
+                            <div class="form-group" id="form-name">
                                 <label>Имя</label>
                                 <input type="text" class="form-control" name="name" placeholder="Введите свое имя">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="form-email">
                                 <label>Email</label>
                                 <input type="email" class="form-control" name="email" placeholder="Введите свой email">
                             </div>
-                             <div class="form-group">
+                             <div class="form-group" id="pass_1">
                                 <label>Пароль</label>
-                                <input type="password" class="form-control" name="pass" id="pass_1" placeholder="Пароль">
+                                <input type="password" class="form-control" name="password" placeholder="Пароль">
                             </div>
-                              <div class="form-group">
+                              <div class="form-group" id="pass_2">
                                 <label>Повторить пароль</label>
-                                <input type="password" class="form-control" id="pass_2" placeholder="Введите пароль еще раз">
+                                <input type="password" class="form-control" name="password_2" placeholder="Введите пароль еще раз">
                             </div>
+
+                            <p class="bg-danger" id="error-text"></p>
+                            <p class="bg-success" id="success-text"></p>
 
                             <input type="submit" class="btn btn-primary btn-block" value="Зарегистрироваться"/>
                         </form>
@@ -85,6 +88,7 @@
     <script src="/_assets/js/vendor/jquery-2.1.1.min.js"></script>
     <script src="/_assets/js/bootstrap/bootstrap.min.js"></script>
     <script src="/_assets/js/plugins/pace/pace.min.js"></script>
+    <script src="js/pages.js"></script>
 </body>
 
 </html>

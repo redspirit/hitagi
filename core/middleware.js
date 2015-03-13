@@ -5,7 +5,8 @@
 
 var data = require('./dataset.js');
 var tools = require('./tools.js');
-//var CONST = require('./const.js').data;
+var queryString = require('querystring');
+//var CONST = require('./const.js');
 
 
 exports.checkToken = function(req, res, next){

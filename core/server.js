@@ -12,7 +12,6 @@ var restify = require('restify');
 var CookieParser = require('restify-cookies');
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({ port: config.ws_port });
-var queryString = require('querystring');
 
 var server = restify.createServer({
     name: 'hitagi',

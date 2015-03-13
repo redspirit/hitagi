@@ -3714,3 +3714,6 @@ div.config h4 a:hover {
 .config-swatch-wrap .options .theme-style-wrapper:hover {
   cursor: pointer;
 }
+.bg-danger, .bg-success {
+    padding: 8px;
+}
