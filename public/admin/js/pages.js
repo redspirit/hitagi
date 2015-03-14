@@ -53,6 +53,8 @@ function ajax_register() {
         success: function(data) {
 
             if(!data.error) {
+                $('#register-btn').attr('disabled', 'disabled');
+                errorText.text('');
                 return successText.html('Регистрация завершена успешно! На ваш email <b>' + obj.email + '</b> выслано письмо с подтверждением регистрации');
             }
 
