@@ -30,6 +30,7 @@ server.use(restify.bodyParser());
 server.use(CookieParser.parse);
 server.use(mediators.prepareBody);
 server.use(mediators.checkToken);
+server.use(mediators.checkPages);
 
 server.on('uncaughtException', function (req, res, route, error) {
 

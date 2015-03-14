@@ -72,7 +72,6 @@ exports.confirm = function(req, res){
 
 };
 
-
 exports.forgot_password = function(req, res){
 
     res.send('Функционал не реализован');

@@ -68,8 +68,9 @@ exports.httpRouting = function(server, httpRoutes, staticServer) {
             return staticServer(req, res, next);
 
 
-        return Controllers[ctrl][action](req, res);
+        //res.static = staticServer;
 
+        return Controllers[ctrl][action](req, res, next);
 
     };
 
