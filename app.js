@@ -14,7 +14,7 @@ var routes = {
     'post /auth/out':                   'auth.remove_token',    // сделать токен недействительным
 
 
-    'get /test':                        'user.test',
+    'get /api/user':                    'user.info',
 
 
 

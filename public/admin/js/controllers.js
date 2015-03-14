@@ -1,4 +1,13 @@
-app.controller('MainCtrl', function($scope) {
+
+app.controller('MainCtrl', function($scope, $http) {
+
+    $scope.user = {};
+
+    $http.get('/api/user').success(function(user){
+
+        $scope.user = user;
+
+    });
 
 });
 
@@ -167,12 +176,12 @@ app.controller('nestableCtrl', function($scope) {
                 "id": 212,
                 "title": "node2.1.2",
                 "items": []
-            }],
+            }]
         }, {
             "id": 22,
             "title": "node2.2",
             "items": []
-        }],
+        }]
     }, {
         "id": 3,
         "title": "node3",

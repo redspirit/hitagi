@@ -133,7 +133,7 @@ function gauge() {
                     $scope.gauge.set(newValues[1]);
                 }
             });
-        },
+        }
     }
 };
 

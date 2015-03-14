@@ -8,7 +8,8 @@ module.exports = {
     noPassword: {error: 'Не указан пароль пользователя', code: 2},
     invalidEmail: {error: 'Неверно указан емейл пользователя', code: 3},
     busyEmail: {error: 'Емейл уже занят', code: 4},
-    userNotFound: {error: 'Пользователь с такими данными не найден', code: 5}
+    userNotFound: {error: 'Пользователь с такими данными не найден', code: 5},
+    authRequire: {error: 'Требуется авторизация пользователя', code: 6}
 
 
 };

@@ -11,7 +11,7 @@ function config($stateProvider, $urlRouterProvider) {
         .state('ui', {
             abstract: true,
             url: "/ui",
-            templateUrl: "views/common.html",
+            templateUrl: "views/common.html"
         })
         .state('ui.buttons', {
             url: "/buttons",
@@ -79,7 +79,7 @@ function config($stateProvider, $urlRouterProvider) {
         .state('forms', {
             abstract: true,
             url: "/forms",
-            templateUrl: "views/common.html",
+            templateUrl: "views/common.html"
         })
         .state('forms.components', {
             url: "/components",
@@ -138,17 +138,10 @@ function config($stateProvider, $urlRouterProvider) {
                 pageTitle: 'Multiple File Upload'
             }
         })
-        .state('forms.wysiwyg', {
-            url: "/wysiwyg",
-            templateUrl: "views/forms-wysiwyg.html",
-            data: {
-                pageTitle: 'WYSIWYG Editors'
-            }
-        })
         .state('tables', {
             abstract: true,
             url: "/tables",
-            templateUrl: "views/common.html",
+            templateUrl: "views/common.html"
         })
         .state('tables.basic', {
             url: "/basic",
@@ -164,43 +157,10 @@ function config($stateProvider, $urlRouterProvider) {
                 pageTitle: 'Data Tables'
             }
         })
-        .state('charts', {
-            abstract: true,
-            url: "/charts",
-            templateUrl: "views/common.html",
-        })
-        .state('charts.chartjs', {
-            url: "/chartjs",
-            templateUrl: "views/charts-chartjs.html",
-            data: {
-                pageTitle: 'Chart.js'
-            }
-        })
-        .state('charts.c3', {
-            url: "/c3",
-            templateUrl: "views/charts-c3.html",
-            data: {
-                pageTitle: 'C3 Charts'
-            }
-        })
-        .state('charts.morris', {
-            url: "/morris",
-            templateUrl: "views/charts-morris.html",
-            data: {
-                pageTitle: 'Morris.js Charts'
-            }
-        })
-        .state('charts.sparkline', {
-            url: "/sparkline",
-            templateUrl: "views/charts-sparkline.html",
-            data: {
-                pageTitle: 'Sparkline Charts'
-            }
-        })
         .state('mail', {
             abstract: true,
             url: "/mail",
-            templateUrl: "views/common.html",
+            templateUrl: "views/common.html"
         })
         .state('mail.inbox', {
             url: "/inbox",
@@ -216,29 +176,10 @@ function config($stateProvider, $urlRouterProvider) {
                 pageTitle: 'Compose Mail'
             }
         })
-        .state('maps', {
-            abstract: true,
-            url: "/maps",
-            templateUrl: "views/common.html",
-        })
-        .state('maps.google', {
-            url: "/google",
-            templateUrl: "views/maps-google.html",
-            data: {
-                pageTitle: 'Google Maps'
-            }
-        })
-        .state('maps.vector', {
-            url: "/vector",
-            templateUrl: "views/maps-vector.html",
-            data: {
-                pageTitle: 'Vector Maps'
-            }
-        })
         .state('pages', {
             abstract: true,
             url: "/pages",
-            templateUrl: "views/common.html",
+            templateUrl: "views/common.html"
         })
         .state('pages.blank', {
             url: "/blank",
