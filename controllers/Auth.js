@@ -5,6 +5,7 @@
 var data = require('./../core/dataset.js');
 var emailService = require('../core/email.js');
 var tools = require('../core/tools.js');
+var errors = require('../core/errors.js');
 
 
 exports.register = function(req, res){
@@ -18,19 +19,19 @@ exports.register = function(req, res){
 
 
     if(!name)
-        return res.send({error: 'Не указано имя пользователя'});
+        return res.send(errors.noUsername);
 
     if(!tools.validateEmail(email))
-        return res.send({error: 'Неверно указан емейл пользователя'});
+        return res.send(errors.invalidEmail);
 
     if(!password)
-        return res.send({error: 'Не указан пароль пользователя'});
+        return res.send(errors.noPassword);
 
 
     data.User.register(d, function(err, user){
 
         if(err)
-            return res.send({error: err});
+            return res.send(err);
 
 
         var mailData = {
@@ -88,7 +89,7 @@ exports.get_token = function(req, res){
     data.User.get_token(email, password, function(err, user){
 
         if(err)
-            return res.send({error: err});
+            return res.send(err);
 
         if(saveCookie)
             res.setCookie('access_token', tools.encrypt(user.token.access_token), {
@@ -114,7 +115,7 @@ exports.refresh_token = function(req, res){
     data.User.refresh_token(refresh, function(err, user){
 
         if(err)
-            return res.send({error: err});
+            return res.send(err);
 
         res.send(user.token);
 
@@ -131,7 +132,7 @@ exports.remove_token = function(req, res){
     data.User.remove_token(refresh, function(err, user){
 
         if(err)
-            return res.send({error: err});
+            return res.send(err);
 
         res.send({status: 'ok'});
 

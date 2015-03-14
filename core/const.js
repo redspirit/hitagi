@@ -3,7 +3,7 @@
  * Константы
  */
 
-exports.data = {
+module.exports = {
 
     USER_STATUS_NEW:            0,      // только что зарегистрированный пользователь
     USER_STATUS_DISABLED:       1,      // отключенный, заблокированный пользователь

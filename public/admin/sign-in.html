@@ -40,7 +40,7 @@
                     <header>
                         <div class="brand">
                             <a href="index.html" class="logo">
-                               <i class="icon-layers"></i>
+                               <i class="fa fa-paper-plane"></i>
                                 <span>ХИТАГИ</span>ЧАТ</a>
                         </div>
                     </header>
@@ -52,25 +52,28 @@
                         </div>
                         <div class="panel-body">
                             <p>Введите данные от вашего аккаунта</p>
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
+                            <form class="form-horizontal" role="form" id="form" method="post" action="javascript:void(0);" onsubmit="ajax_login()">
+                                <div class="form-group" id="form-email">
                                     <div class="col-md-12">
-                                        <input type="email" class="form-control" id="email" placeholder="Email">
+                                        <input type="email" class="form-control form-padding" name="email" placeholder="Email">
                                         <i class="fa fa-user"></i>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="form-password">
                                     <div class="col-md-12">
-                                        <input type="password" class="form-control" id="password" placeholder="Пароль">
+                                        <input type="password" class="form-control form-padding" name="password" placeholder="Пароль">
                                         <i class="fa fa-lock"></i>
                                         <a href="javascript:void(0)" class="help-block">Завыбли свой пароль?</a>
                                     </div>
                                 </div>
+
+                                <p class="bg-danger" id="error-text"></p>
+
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <a href="index.html" class="btn btn-primary btn-block">Войти</a>
+                                        <input type="submit" class="btn btn-primary btn-block" value="Войти" />
                                         <hr />
-                                        <a href="pages-sign-up.html" class="btn btn-default btn-block">Нет учетной записи? Зарегистрируйтесь!</a>
+                                        <a href="sign-up.html" class="btn btn-default btn-block">Нет учетной записи? Зарегистрируйтесь!</a>
                                     </div>
                                 </div>
                             </form>
@@ -85,6 +88,7 @@
     <script src="/_assets/js/vendor/jquery-2.1.1.min.js"></script>
     <script src="/_assets/js/bootstrap/bootstrap.min.js"></script>
     <script src="/_assets/js/plugins/pace/pace.min.js"></script>
+    <script src="js/pages.js"></script>
 </body>
 
 </html>

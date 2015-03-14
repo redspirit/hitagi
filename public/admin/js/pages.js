@@ -58,7 +58,7 @@ function ajax_register() {
                 return successText.html('Регистрация завершена успешно! На ваш email <b>' + obj.email + '</b> выслано письмо с подтверждением регистрации');
             }
 
-            if(data.error == 'email') {
+            if(data.code == 4) {
 
                 $('#form-email').addClass('has-error');
                 return errorText.text('Ошибка: указанный email уже занят');
@@ -72,4 +72,55 @@ function ajax_register() {
             alert("Возникла ошибка!");
         }
     });
+};
+
+function ajax_login() {
+    var msg = $("#form").serialize();
+    var array = $("#form").serializeArray();
+    var obj = {};
+    var errorText = $('#error-text');
+
+    array.forEach(function(elem){
+        obj[elem.name] = elem.value;
+    });
+
+
+    if(!validateEmail(obj.email)) {
+        $('#form-email').addClass('has-error');
+        return errorText.text('Ошибка: неверный емейл');
+    }
+
+    if(obj.password.length < 6) {
+        $('#form-password').addClass('has-error');
+        return errorText.text('Ошибка: Пароль должен быть не мнее 6 символов');
+    }
+
+    obj.cookie = true;
+
+
+    $.ajax({
+        type: "POST",
+        url: "/auth/token",
+        data: msg,
+        success: function(data) {
+
+            console.log(data);
+
+            if(!data.error) {
+                document.location.href = '/admin/index.html';
+                return false;
+            }
+
+            if(data.code == 5) {
+                return errorText.text('Ошибка: неверный логин или пароль');
+            }
+
+            alert(data.error);
+
+        },
+        error:  function(xhr, str){
+            alert("Возникла ошибка!");
+        }
+    });
+
 }

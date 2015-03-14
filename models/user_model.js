@@ -5,7 +5,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var tools = require('../core/tools.js');
-var CONST = require('../core/const.js').data;
+var CONST = require('../core/const.js');
+var errors = require('../core/errors.js');
 //var moment = require('moment');
 //var _ = require('underscore');
 
@@ -59,7 +60,7 @@ UserSchema.statics.register = function(data, cb){
     User.findOne({email: data.email}, function(err, checkUser){
 
         if(checkUser)
-            return cb('email', null);
+            return cb(errors.busyEmail, null);
 
         var user = new User({
             name: data.name,
@@ -83,7 +84,7 @@ UserSchema.statics.confirm = function(code, cb){
     User.findOne({email_code: code, status: CONST.USER_STATUS_NEW}, function(err, user){
 
         if(!user)
-            return cb('user not found', null);
+            return cb(errors.userNotFound, null);
 
         user.status = CONST.USER_STATUS_REGULAR;
         user.email_code = '';
@@ -112,7 +113,7 @@ UserSchema.statics.get_token = function(email, pass, cb){
     User.findOne({email: email, password: password}, function(err, user) {
 
         if(!user)
-            return cb('user not found', null);
+            return cb(errors.userNotFound, null);
 
         user.token = {
             access_token: tools.ramdomString(24),
@@ -132,7 +133,7 @@ UserSchema.statics.refresh_token = function(refresh, cb){
     User.findOne({'token.refresh_token': refresh}, function(err, user) {
 
         if(!user)
-            return cb('user not found', null);
+            return cb(errors.userNotFound, null);
 
         user.token = {
             access_token: tools.ramdomString(24),
@@ -146,13 +147,13 @@ UserSchema.statics.refresh_token = function(refresh, cb){
 
 };
 
-UserSchema.statics.remove_token = function(cb){
+UserSchema.statics.remove_token = function(token, cb){
     var User = this;
 
-    User.findOne({'token.refresh_token': refresh}, function(err, user) {
+    User.findOne({'token.access_token': token}, function(err, user) {
 
         if(!user)
-            return cb('user not found', null);
+            return cb(errors.userNotFound, null);
 
         user.token = {};
 

@@ -3720,3 +3720,6 @@ div.config h4 a:hover {
 .bg-danger:empty, .bg-success:empty {
     display: none;
 }
+.form-padding{
+    padding-left: 28px;
+}
