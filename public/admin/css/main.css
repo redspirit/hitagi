@@ -233,7 +233,6 @@ canvas {
   height: 32px;
 }
 #header .nav li.profile > a > .meta > .text {
-  font-size: 0.75em;
   font-weight: 600;
   padding: 0 5px;
 }

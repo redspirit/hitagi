@@ -41,7 +41,7 @@ models.forEach(function (model) {
     var m = require(modelsDir + model).model;
     var name = getName(model);
 
-    m.methods.clear = clearData;        // метод для получения чистых данных из обьекта записи
+    m.methods.toJson = clearData;        // метод для получения чистых данных из обьекта записи
 
     module.exports[name] = mongoose.model(name, m);
     console.info('Добавлена модель:', name);

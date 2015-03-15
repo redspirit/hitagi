@@ -51,11 +51,12 @@ var UserSchema = new Schema({
 });
 
 
+UserSchema.methods.clear = function(){
+    return this.toJson(['alias', 'name', 'email', 'status', 'last_login', 'reg_date', 'avatar', 'api_key']);
+};
 
 UserSchema.statics.register = function(data, cb){
     var User = this;
-
-    //console.log(data);
 
     User.findOne({email: data.email}, function(err, checkUser){
 

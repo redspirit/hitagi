@@ -12,9 +12,11 @@ var routes = {
     'post /auth/token':                 'auth.get_token',       // получить токен доступа по паролю
     'post /auth/refresh':               'auth.refresh_token',   // обновить токен
     'post /auth/out':                   'auth.remove_token',    // сделать токен недействительным
+    'get /sign-out':                    'auth.sing_out',        // разлогинится, аналогично remove_token
 
 
     'get /api/user':                    'user.info',
+    'put /api/user/update':             'user.update',
 
 
 

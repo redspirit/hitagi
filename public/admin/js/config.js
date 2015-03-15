@@ -8,6 +8,20 @@ function config($stateProvider, $urlRouterProvider) {
                 pageTitle: 'index'
             }
         })
+        .state('account', {
+            url: "/account",
+            templateUrl: "views/account.html",
+            data: {
+                pageTitle: 'Аккаунт пользователя'
+            }
+        })
+        .state('settings', {
+            url: "/settings",
+            templateUrl: "views/settings.html",
+            data: {
+                pageTitle: 'Настройки'
+            }
+        })
         .state('ui', {
             abstract: true,
             url: "/ui",
@@ -102,35 +116,6 @@ function config($stateProvider, $urlRouterProvider) {
                 pageTitle: 'Mask'
             }
         })
-        .state('forms.wizard', {
-            url: "/wizard",
-            templateUrl: "views/forms-wizard.html",
-            controller: wizardCtrl,
-            data: {
-            pageTitle: 'Wizard'
-            }
-        })
-        .state('forms.wizard.step_one', {
-            url: "/step_one",
-            templateUrl: "views/wizard/step_one.html",
-            data: {
-                pageTitle: 'Wizard'
-            }
-        })
-        .state('forms.wizard.step_two', {
-            url: "/step_two",
-            templateUrl: "views/wizard/step_two.html",
-            data: {
-                pageTitle: 'Wizard'
-            }
-        })
-        .state('forms.wizard.step_three', {
-            url: "/step_three",
-            templateUrl: "views/wizard/step_three.html",
-            data: {
-                pageTitle: 'Wizard'
-            }
-        })
         .state('forms.multi-upload', {
             url: "/multi-upload",
             templateUrl: "views/forms-multi-upload.html",
@@ -180,13 +165,6 @@ function config($stateProvider, $urlRouterProvider) {
             abstract: true,
             url: "/pages",
             templateUrl: "views/common.html"
-        })
-        .state('pages.blank', {
-            url: "/blank",
-            templateUrl: "views/pages-blank.html",
-            data: {
-                pageTitle: 'Blank Page'
-            }
         })
         .state('pages.profile', {
             url: "/profile",

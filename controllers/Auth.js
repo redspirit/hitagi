@@ -6,6 +6,7 @@ var data = require('./../core/dataset.js');
 var emailService = require('../core/email.js');
 var tools = require('../core/tools.js');
 var errors = require('../core/errors.js');
+var cache = require('memory-cache');
 
 
 exports.register = function(req, res){
@@ -136,6 +137,31 @@ exports.remove_token = function(req, res){
         res.send({status: 'ok'});
 
         console.info('Пользователь', user.email, 'удалил свой токен');
+
+    });
+
+};
+
+exports.sing_out = function(req, res){
+
+    if(!req.user)
+        return res.send(errors.authRequire);
+
+    var redirect = req.query.redirect ? req.query.redirect : '/';
+
+    cache.put(req.user.token.access_token, null, 1);
+
+    req.user.token = {};
+    req.user.save(function(err, doc){
+
+        res.setCookie('access_token', '', {
+            maxAge: 0,
+            path: '/',
+            httpOnly: true
+        });
+
+        res.header('Location', redirect);
+        res.send(302);
 
     });
 
