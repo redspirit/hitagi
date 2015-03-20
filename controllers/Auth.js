@@ -7,7 +7,7 @@ var emailService = require('../core/email.js');
 var tools = require('../core/tools.js');
 var errors = require('../core/errors.js');
 var cache = require('memory-cache');
-
+var CONST = require('../core/const.js');
 
 exports.register = function(req, res){
 
@@ -75,7 +75,94 @@ exports.confirm = function(req, res){
 
 exports.forgot_password = function(req, res){
 
-    res.send('Функционал не реализован');
+    var email = req.body.email;
+
+    if(!tools.validateEmail(email))
+        return res.send(errors.invalidEmail);
+
+    data.User.getByEmail(email, function(err, user){
+
+        if(!user)
+            return res.send(errors.userNotFound);
+
+        var mailData = {
+            code: tools.encrypt(user._id + user.email),
+            name: user.name,
+            email: email,
+            subject: 'Запрос на восстановление пароля'
+        };
+
+        emailService.send(email, mailData, 'mail/forgot_request');
+
+        res.send({status: 'ok'});
+
+        console.info('Запрошено восстановление пароля для', email);
+
+    });
+
+};
+
+exports.forgot_request = function(req, res){
+
+    var code = req.query.code;
+    var email = req.query.email;
+
+    data.User.getByEmail(email, function(err, user) {
+
+        if (!user)
+            return tools.template('error', {message: 'Нельзя восстановить пороль потому что пользователь не найден'}, res);
+
+        var origCode = tools.encrypt(user._id + user.email);
+
+        if(origCode != code)
+            return tools.template('error', {message: 'Нельзя восстановить пороль, неверный код безопасности'}, res);
+
+
+        user.status = CONST.USER_STATUS_NEW;
+        user.save();
+
+        res.header('Location', '/admin/forgot-set.html?code=' + code + '&email=' + email);
+        res.send(302);
+
+    });
+
+};
+
+exports.forgot_set = function(req, res){
+
+    var d = req.body;
+    var code = d.code;
+    var email = d.email;
+    var password = d.password;
+
+    if(!password)
+        return res.send(errors.noPassword);
+
+
+    data.User.getByEmail(email, function(err, user) {
+
+        if (!user)
+            return res.send(errors.userNotFound);
+
+        var origCode = tools.encrypt(user._id + user.email);
+
+        if(origCode != code)
+            return res.send(errors.wrongVerificationCode);
+
+
+        console.log(password, tools.sha1(password));
+
+        user.password = tools.sha1(password);
+        user.status = CONST.USER_STATUS_REGULAR;
+        user.save(function(err, doc){
+
+            res.send({status: 'ok'});
+
+            console.info('Новый пароль установлен для пользователя', email);
+
+        });
+
+    });
 
 };
 
@@ -83,8 +170,7 @@ exports.get_token = function(req, res){
 
     var email = req.query.email || req.body.email;
     var password = req.query.password || req.body.password;
-    var saveCookie = req.query.cookie == 'true';
-
+    var saveCookie = (req.query.cookie || req.body.cookie) == 'true';
 
     data.User.get_token(email, password, function(err, user){
 

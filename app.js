@@ -7,7 +7,9 @@ var server = require('./core/server.js');
 var routes = {
     'post /auth/register':              'auth.register',        // зарегистрирвать пользователя и выслать ему пароль
     'get /auth/confirm':                'auth.confirm',         // подтвердить емейл пользователя
-    'get /auth/forgot':                 'auth.forgot_password', // восстановить пароль через емейл
+    'post /auth/forgot':                'auth.forgot_password', // восстановить пароль через емейл
+    'get /forgot_request':              'auth.forgot_request',  // ссылка из письма
+    'post /auth/forgot_set':            'auth.forgot_set',      // сохранение нового пароля
 
     'post /auth/token':                 'auth.get_token',       // получить токен доступа по паролю
     'post /auth/refresh':               'auth.refresh_token',   // обновить токен

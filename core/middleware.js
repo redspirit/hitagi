@@ -10,14 +10,16 @@ var cache = require('memory-cache');
 
 // список путей, на которые нельзя перейти без авторизационных куки
 var needPaths = [
-    '/admin',
-    '/admin/index.html'
+   // '/admin',
+   // '/admin/index.html'
 ];
 
 // список путей, на которые наоборот нельзя перейти имея куки
 var stopPaths = [
-    '/admin/sign-in.html',
-    '/admin/sign-up.html'
+   // '/admin/forgot.html',
+   // '/admin/forgot-set.html',
+   // '/admin/sign-in.html',
+   // '/admin/sign-up.html'
 ];
 
 

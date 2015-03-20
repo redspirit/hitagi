@@ -164,6 +164,9 @@ UserSchema.statics.remove_token = function(token, cb){
 
 };
 
-
+UserSchema.statics.getByEmail = function(email, cb){
+    var User = this;
+    User.findOne({email: email}, cb);
+};
 
 exports.model = UserSchema;

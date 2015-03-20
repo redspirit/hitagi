@@ -10,7 +10,8 @@ module.exports = {
     busyEmail: {error: 'Емейл уже занят', code: 4},
     userNotFound: {error: 'Пользователь с такими данными не найден', code: 5},
     authRequire: {error: 'Требуется авторизация пользователя', code: 6},
-    savingError: {error: 'Ошибка сохранения данных', code: 7}
+    savingError: {error: 'Ошибка сохранения данных', code: 7},
+    wrongVerificationCode: {error: 'Неверный код безопсности', code: 8}
 
 
 };
