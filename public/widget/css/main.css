@@ -1,3 +1,6 @@
+*:focus{
+    outline: none;
+}
 .room-pane{
 
     position: absolute;
@@ -26,13 +29,23 @@
 
 }
 .message-pane{
-
     position: absolute;
     left: 0;
-    bottom: 0px;
+    bottom: 0;
     right: 0;
     height: 30px;
+}
+.message-pane input{
+     border: none;
+     padding: 4px;
+     font-size: 110%;
+     width: 100%;
+     box-sizing: border-box;
+}
+.message-pane > div{
+    font-size: 90%;
+}
 
-    background-color: #5cb85c;
-
+.message-pane > div > input{
+    width: 200px;
 }

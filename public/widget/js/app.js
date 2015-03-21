@@ -1,9 +1,10 @@
 var app = angular.module('widget', []);
 
-app.controller('MainCtrl', function($scope, $http){
+app.controller('MainCtrl', function($scope, $http, ws){
 
+    MicroEvent.mixin(ws);
     var urlParams = parseGetParams();
-
+    $scope.isAuth = false;
 
     if(!isFramed()) {
         alert('Запущено не во фрейме!');
@@ -17,15 +18,30 @@ app.controller('MainCtrl', function($scope, $http){
     $scope.roomId = urlParams.id;
 
 
-    $scope.message = function(text) {
+    $scope.singIn = function(nick) {
 
+
+        $scope.isAuth = true;
+
+
+
+    };
+
+    $scope.message = function(text) {
 
         console.log(text);
 
-        text = '';
+        ws.send('mess', {text: text});
 
-    }
+    };
 
+
+    ws.on('echo', function(message){
+
+
+        console.log('echo ', message);
+
+    });
 
 
 });

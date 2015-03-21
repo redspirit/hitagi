@@ -64,7 +64,31 @@ function ws_paths(routes){
 
     wss.on('connection', function(ws) {
 
+        router.wsRouting(routes, {event: 'connect'}, ws);
 
+        ws.sendEvent = function(name, data){
+            data.event = name;
+            ws.send(JSON.stringify(data));
+        };
+
+        ws.on('message', function(message) {
+
+            try {
+                var json = JSON.parse(message);
+            } catch (e) {
+                return;
+            }
+
+            if(!json.event)
+                return false;
+
+            router.wsRouting(routes, json, ws);
+
+        });
+
+        ws.on('close', function() {
+            router.wsRouting(routes, {event: 'disconnect'}, ws);
+        });
 
     });
 

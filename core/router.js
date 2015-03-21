@@ -3,6 +3,7 @@
  */
 
 var fs = require('fs');
+var _ = require('underscore');
 var config = require('./../config.json');
 var dataset = require('./dataset.js');
 
@@ -97,5 +98,37 @@ exports.httpRouting = function(server, httpRoutes, staticServer) {
      }
 
     server.get(/.*/, staticServer);
+
+};
+
+exports.wsRouting = function(routes, message, ws) {
+
+    var cmd = routes[message.event];
+
+    if(!cmd)
+        return console.error('Входящее событие', message.event, 'не определено в роутере');
+
+    var cmdParts = cmd.split('.');
+
+    if(cmdParts.length != 2)
+        return console.error('Неверный параметр роутера', cmd);
+
+    var ctrl = cmdParts[0];
+    var action = cmdParts[1];
+
+    if(typeof Controllers[ctrl] != 'object')
+        return console.error('Контроллер не найден', ctrl);
+
+    if(typeof Controllers[ctrl][action] != 'function')
+        return console.error('Метод контролера не найден', action);
+
+
+    Controllers[ctrl][action](ws, _.omit(message, 'event'), function(msg){
+
+
+        console.log('Тут вызывается кэлбэк', msg);
+
+
+    });
 
 };

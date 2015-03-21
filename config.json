@@ -1,6 +1,6 @@
 {
     "http_port": 3300,
-    "ws_port": 8124,
+    "ws_port": 3310,
     "expires_in": 86400,
     "public_path": "/public",
     "file_cache" : 0,

@@ -36,9 +36,9 @@ var routes = {
 
 var ws_routes = {
     'connect':                          'auth.socket_connect',         // подключение к сокету
-    'disconnect':                       'auth.socket_disconnect'      // отключение от сокета
+    'disconnect':                       'auth.socket_disconnect',      // отключение от сокета
 
-    //'user:profile':             'user.updateProfile',
+    'mess':             'auth.socket_test'
     //'user:position':            'user.setPosition'
 };
 
