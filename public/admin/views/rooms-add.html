@@ -1,0 +1,28 @@
+<div class="pageheader">
+    <h1>Создать новую комнату</h1>
+</div>
+<section id="main-content" class="animated fadeInRight">
+
+
+    <form class="form-horizontal form-border" ng-submit="roomCreate(form)">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Заголовок</label>
+            <div class="col-sm-6">
+                <input type="text" ng-model="form.caption" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Алиас</label>
+            <div class="col-sm-6">
+                <input type="text" ng-model="form.alias" class="form-control">
+            </div>
+        </div>
+
+        <div class="text-center">
+            <input type="submit" class="btn btn-success" value="Создать"/>
+        </div>
+
+    </form>
+
+</section>

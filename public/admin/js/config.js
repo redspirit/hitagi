@@ -22,72 +22,18 @@ function config($stateProvider, $urlRouterProvider) {
                 pageTitle: 'Настройки'
             }
         })
-        .state('ui', {
-            abstract: true,
-            url: "/ui",
-            templateUrl: "views/common.html"
-        })
-        .state('ui.buttons', {
-            url: "/buttons",
-            templateUrl: "views/ui-buttons.html",
+        .state('rooms', {
+            url: "/rooms",
+            templateUrl: "views/rooms.html",
             data: {
-                pageTitle: 'Buttons'
+                pageTitle: 'Комнаты'
             }
         })
-        .state('ui.sliders-progress', {
-            url: "/sliders-progress",
-            templateUrl: "views/ui-sliders-progress.html",
+        .state('roomsAdd', {
+            url: "/rooms/add",
+            templateUrl: "views/rooms-add.html",
             data: {
-                pageTitle: 'Sliders and Progress'
-            }
-        })
-        .state('ui.modals-popups', {
-            url: "/modals-popups",
-            templateUrl: "views/ui-modals-popups.html",
-            data: {
-                pageTitle: 'Modals and Popups'
-            }
-        })
-        .state('ui.tabs-accordions', {
-            url: "/tabs-accordions",
-            templateUrl: "views/ui-tabs-accordions.html",
-            data: {
-                pageTitle: 'Tabs and Accordions'
-            }
-        })
-        .state('ui.alerts-notifications', {
-            url: "/alerts-notifications",
-            templateUrl: "views/ui-alerts-notifications.html",
-            data: {
-                pageTitle: 'Alerts and Notifications'
-            }
-        })
-        .state('ui.nestable-lists', {
-            url: "/nestable-lists",
-            templateUrl: "views/ui-nestable-lists.html",
-            data: {
-                pageTitle: 'Nestable and Lists'
-            }
-        })
-        .state('ui.panels', {
-            url: "/panels",
-            templateUrl: "views/ui-panels.html",
-            data: {
-                pageTitle: 'Panels'
-            }
-        })
-        .state('ui.icons', {
-            url: "/icons",
-            templateUrl: "views/ui-icons.html",
-            data: {
-                pageTitle: 'Icons'
-            }
-        })
-        .state('ui.typography', {
-            url: "/typography",
-            templateUrl: "views/ui-typography.html",
-            data: {
-                pageTitle: 'Typography'
+                pageTitle: 'Создать новую комнату'
             }
         })
         .state('forms', {

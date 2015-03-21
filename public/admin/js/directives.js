@@ -26,8 +26,8 @@ function pageTitle($rootScope, $timeout) {
     return {
         link: function(scope, element) {
             var listener = function(event, toState, toParams, fromState, fromParams) {
-                var title = 'NeuBoard - Responsive Admin Theme';
-                if (toState.data && toState.data.pageTitle) title = 'NeuBoard | ' + toState.data.pageTitle;
+                var title = 'Hitagi - cool chat online service';
+                if (toState.data && toState.data.pageTitle) title = 'Hitagi | ' + toState.data.pageTitle;
                 $timeout(function() {
                     element.text(title);
                 });

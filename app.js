@@ -17,8 +17,17 @@ var routes = {
     'get /sign-out':                    'auth.sing_out',        // разлогинится, аналогично remove_token
 
 
+    /* USERS */
+
     'get /api/user':                    'user.info',
     'put /api/user/update':             'user.update',
+
+
+    /* ROOMS */
+
+    'post /api/room':                   'room.make',
+    'get /api/rooms':                   'room.list',
+
 
 
 

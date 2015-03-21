@@ -1,0 +1,77 @@
+<div class="pageheader head-width-btn">
+
+    <h1>Комнаты</h1>
+
+    <button class="btn btn-sm btn-success" ui-sref="roomsAdd">
+        <i class="fa fa-plus"></i> создать
+    </button>
+
+</div>
+<section id="main-content" class="animated fadeInRight">
+    <div class="row">
+
+        <div class="col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Список чатов</h3>
+                            <div class="actions pull-right">
+                                <i data-fullscreen-widget class="fa fa-expand"></i>
+                                <i data-widget-toggle class="fa fa-chevron-down"></i>
+                                <i data-widget-close class="fa fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Заголовок</th>
+                                    <th>Алиас</th>
+                                    <th>Дата создания</th>
+                                    <th>В онлайне</th>
+                                </tr>
+                                <tr ng-repeat="room in myRooms" ng-click="showRoomInfo(room)">
+                                    <td>{{room.caption}}</td>
+                                    <td>{{room.alias}}</td>
+                                    <td>{{room.create_date | date:'dd.MM.yyyy'}}</td>
+                                    <td>{{room.users.length}}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Детали комнаты</h3>
+                            <div class="actions pull-right">
+                                <i data-fullscreen-widget class="fa fa-expand"></i>
+                                <i data-widget-toggle class="fa fa-chevron-down"></i>
+                                <i data-widget-close class="fa fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+
+                            <pre>
+                                {{roomDetail | json}}
+                            </pre>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</section>

@@ -11,7 +11,9 @@ module.exports = {
     userNotFound: {error: 'Пользователь с такими данными не найден', code: 5},
     authRequire: {error: 'Требуется авторизация пользователя', code: 6},
     savingError: {error: 'Ошибка сохранения данных', code: 7},
-    wrongVerificationCode: {error: 'Неверный код безопсности', code: 8}
+    wrongVerificationCode: {error: 'Неверный код безопсности', code: 8},
+    busyRoomAlias: {error: 'Такой алис уже занят', code: 9},
+    createRoomError: {error: 'Ошибка создания новой комнаты', code: 10}
 
 
 };
