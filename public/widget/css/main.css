@@ -1,0 +1,38 @@
+.room-pane{
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 30px;
+    right: 150px;
+
+    padding: 8px;
+
+    background-color: #017ebc;
+
+}
+.roster-pane{
+
+    position: absolute;
+
+    top: 0;
+    bottom: 30px;
+    right: 0;
+    width: 150px;
+
+    padding: 8px;
+
+    background-color: #24aca5;
+
+}
+.message-pane{
+
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    right: 0;
+    height: 30px;
+
+    background-color: #5cb85c;
+
+}

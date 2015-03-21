@@ -3,29 +3,34 @@
 <head>
     <meta charset="utf-8">
     <title>Чат</title>
-
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/_assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/_assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/_assets/css/simple-line-icons.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
+<div class="room-pane">
 
-            Angular {{text}}
+    Angular {{roomId}}
 
-        </div>
-    </div>
 </div>
+<div class="roster-pane">
+
+    ***
+
+</div>
+
+<div class="message-pane">
+
+    <form ng-submit="message(form.message)">
+        <input type="text" class="form-control" placeholder="Введите ваше сообщение" ng-model="form.message" />
+    </form>
+
+</div>
+
+
 
 <script src="/_assets/js/vendor/jquery-2.1.1.min.js"></script>
 <script src="/_assets/js/angular/angular.js"></script>
