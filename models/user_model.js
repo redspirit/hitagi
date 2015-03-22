@@ -8,7 +8,7 @@ var tools = require('../core/tools.js');
 var CONST = require('../core/const.js');
 var errors = require('../core/errors.js');
 //var moment = require('moment');
-//var _ = require('underscore');
+var _ = require('underscore');
 
 
 var UserSchema = new Schema({
@@ -41,6 +41,12 @@ var UserSchema = new Schema({
     api_key: {
         type: String
     },
+    guest_code: {           // уникальный код для определения гостя
+        type: String
+    },
+    last_ip: {              // последний IP используемый для авторизации
+        type: String
+    },
     email_code: {
         type: String
     },
@@ -52,7 +58,11 @@ var UserSchema = new Schema({
 
 
 UserSchema.methods.clear = function(){
-    return this.toJson(['alias', 'name', 'email', 'status', 'last_login', 'reg_date', 'avatar', 'api_key']);
+    return _.pick(this.toObject(), ['alias', 'name', 'email', 'status', 'last_login', 'reg_date', 'avatar', 'api_key']);
+};
+
+UserSchema.methods.clearGuest = function(){
+    return _.pick(this.toObject(), ['_id', 'name', 'status', 'last_login', 'guest_code', 'last_ip']);
 };
 
 UserSchema.statics.register = function(data, cb){
@@ -65,8 +75,6 @@ UserSchema.statics.register = function(data, cb){
 
         var user = new User({
             name: data.name,
-            email: data.email,
-            password: tools.sha1(data.password),
             status: CONST.USER_STATUS_NEW,
             reg_date: Date.now(),
             api_key: tools.ramdomString(12),
@@ -76,6 +84,30 @@ UserSchema.statics.register = function(data, cb){
         user.save(cb);
 
     });
+
+};
+
+UserSchema.statics.register_guest = function(code, nick, ip, cb){
+
+    var User = this;
+
+    User.findOne({guest_code: code}, function(err, guest) {
+
+        if(guest)
+            return cb(null, guest);
+
+        var newGuest = new User({
+            name: nick,
+            guest_code: code,
+            status: CONST.USER_STATUS_GUEST,
+            reg_date: Date.now(),
+            last_ip: ip
+        });
+
+        newGuest.save(cb);
+
+    });
+
 
 };
 

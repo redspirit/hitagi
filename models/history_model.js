@@ -35,5 +35,10 @@ HistorySchema.statics.add = function(d, cb){
     hist.save(cb);
 };
 
+HistorySchema.statics.byRoom = function(room, cb){
+    var History = this;
+    History({room: room}, cb);
+};
+
 
 exports.model = HistorySchema;

@@ -39,7 +39,11 @@ var ws_routes = {
     'disconnect':                       'auth.socket_disconnect',      // отключение от сокета
 
     'widget_init':                      'room.widget_init',
-    'chat':             'auth.socket_chat'
+    'sing_in_guest':                    'auth.sing_in_guest',
+
+
+
+    'chat':                             'auth.socket_chat'
 };
 
 server.Start(routes, ws_routes);

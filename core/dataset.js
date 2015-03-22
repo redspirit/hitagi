@@ -25,23 +25,9 @@ var getName = function(s) {
     return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();
 };
 
-var clearData = function (myFields) {
-    if(myFields) {
-        return _.pick(this, myFields);
-    } else {
-        var fields = [];
-        for(var item in this.__proto__.schema.paths) {
-            if(item != '__v') fields.push(item);
-        }
-        return _.pick(this, fields);
-    }
-};
-
 models.forEach(function (model) {
     var m = require(modelsDir + model).model;
     var name = getName(model);
-
-    m.methods.toJson = clearData;        // метод для получения чистых данных из обьекта записи
 
     module.exports[name] = mongoose.model(name, m);
     console.info('Добавлена модель:', name);

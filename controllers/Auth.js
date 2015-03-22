@@ -255,26 +255,34 @@ exports.sing_out = function(req, res){
 
 exports.socket_connect = function(s, d){
 
-    console.log('CLIENT CONNECT');
+    console.log('Сокет подключен', s.ip);
 
 };
 
 exports.socket_disconnect = function(s, d){
 
-    console.log('CLIENT DISCONNECT');
-
-};
-
-exports.socket_test = function(s, d){
-
-    console.log('TEST', d);
-
-    s.sendEvent('echo', {text: d.text});
+    console.log('Сокет отключен', s.ip);
 
 };
 
 exports.socket_chat = function(s, d, callback){
 
     callback({status: 'ok'});
+
+};
+
+exports.sing_in_guest = function(s, d, callback){
+
+    if(!d.code)
+        return callback(errors.noGuestCode);
+
+
+    data.User.register_guest(d.code, d.nick, s.ip, function(err, guest){
+
+        callback(guest.clearGuest());
+
+
+    });
+
 
 };

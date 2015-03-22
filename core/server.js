@@ -64,6 +64,8 @@ function ws_paths(routes){
 
     wss.on('connection', function(ws) {
 
+        ws.ip = ws._socket.remoteAddress;
+
         router.wsRouting(routes, {e: 'connect'}, ws);
 
         ws.sendEvent = function(name, data, cbName){
