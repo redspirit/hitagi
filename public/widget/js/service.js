@@ -13,10 +13,19 @@ app.service('ws', function($http){
         return alert('Вебсокеты не работают!');
     }
 
-    var connection = new WebSocket('ws://localhost:3310');
+    var connection = new ReconnectingWebSocket('ws://localhost:3310');
 
     connection.onopen = function () {
+
+        console.log('open');
+
         self.trigger('connect');
+    };
+
+    connection.onclose = function() {
+
+        console.log('closed');
+
     };
 
     connection.onerror = function (error) {
