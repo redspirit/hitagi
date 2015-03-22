@@ -1,12 +1,11 @@
 var app = angular.module('widget', []);
 
-app.controller('MainCtrl', function($scope, $http, ws){
+app.controller('MainCtrl', function($scope, $http, tools, ws){
 
-    MicroEvent.mixin(ws);
-    var urlParams = parseGetParams();
+    var urlParams = tools.parseGetParams();
     $scope.isAuth = false;
 
-    if(!isFramed()) {
+    if(!tools.isFramed()) {
         alert('Запущено не во фрейме!');
     }
 
@@ -38,8 +37,24 @@ app.controller('MainCtrl', function($scope, $http, ws){
     };
 
 
-    ws.on('echo', function(message){
+    /******** EVENTS  *********/
 
+    ws.on('connect', function(){
+
+        if(!urlParams.id)
+            return false;
+
+        ws.send('widget_init', {roomId: urlParams.id}, function(response){
+
+
+
+
+
+        });
+
+    });
+
+    ws.on('echo', function(message){
 
         console.log('echo ', message);
 

@@ -38,7 +38,7 @@ var ws_routes = {
     'connect':                          'auth.socket_connect',         // подключение к сокету
     'disconnect':                       'auth.socket_disconnect',      // отключение от сокета
 
-    'mess':             'auth.socket_test',
+    'widget_init':                      'room.widget_init',
     'chat':             'auth.socket_chat'
 };
 

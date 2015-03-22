@@ -49,3 +49,23 @@ exports.list = function(req, res) {
     });
 
 };
+
+exports.widget_init = function(s, d, callback) {
+
+    if(!d.roomId)
+        return callback(errors.roomIdNotSet);
+
+    console.log('Инициализация комнаты', d.roomId);
+
+    data.Room.info(d.roomId, function(err, room){
+
+        if(!room)
+            return callback(errors.roomNotFound);
+
+        callback(room);
+
+    });
+
+
+
+};

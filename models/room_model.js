@@ -57,5 +57,10 @@ RoomSchema.statics.byUser = function(user, cb){
     Room.find({users: user}, cb);
 };
 
+RoomSchema.statics.info = function(id, cb){
+    var Room = this;
+    Room.findById(id, cb);
+};
+
 
 exports.model = RoomSchema;

@@ -64,11 +64,14 @@ function ws_paths(routes){
 
     wss.on('connection', function(ws) {
 
-        router.wsRouting(routes, {event: 'connect'}, ws);
+        router.wsRouting(routes, {e: 'connect'}, ws);
 
-        ws.sendEvent = function(name, data){
-            data.event = name;
-            ws.send(JSON.stringify(data));
+        ws.sendEvent = function(name, data, cbName){
+            ws.send(JSON.stringify({
+                e: name,
+                d: data,
+                c: cbName
+            }));
         };
 
         ws.on('message', function(message) {
@@ -79,7 +82,7 @@ function ws_paths(routes){
                 return;
             }
 
-            if(!json.event)
+            if(!json.e)
                 return false;
 
             router.wsRouting(routes, json, ws);
@@ -87,7 +90,7 @@ function ws_paths(routes){
         });
 
         ws.on('close', function() {
-            router.wsRouting(routes, {event: 'disconnect'}, ws);
+            router.wsRouting(routes, {e: 'disconnect'}, ws);
         });
 
     });

@@ -103,10 +103,10 @@ exports.httpRouting = function(server, httpRoutes, staticServer) {
 
 exports.wsRouting = function(routes, message, ws) {
 
-    var cmd = routes[message.event];
+    var cmd = routes[message.e];
 
     if(!cmd)
-        return console.error('Входящее событие', message.event, 'не определено в роутере');
+        return console.error('Входящее событие', message.e, 'не определено в роутере');
 
     var cmdParts = cmd.split('.');
 
@@ -123,13 +123,12 @@ exports.wsRouting = function(routes, message, ws) {
         return console.error('Метод контролера не найден', action);
 
 
-    Controllers[ctrl][action](ws, _.omit(message, ['event', '_cb']), function(msg){
+    Controllers[ctrl][action](ws, message.d, function(data){
 
-        if(!message._cb)
+        if(!message.c)
             return false;
 
-        msg._cb = message._cb;
-        ws.sendEvent(message.event, msg);
+        ws.sendEvent(message.e, data, message.c);
 
     });
 

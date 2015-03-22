@@ -13,7 +13,10 @@ module.exports = {
     savingError: {error: 'Ошибка сохранения данных', code: 7},
     wrongVerificationCode: {error: 'Неверный код безопсности', code: 8},
     busyRoomAlias: {error: 'Такой алис уже занят', code: 9},
-    createRoomError: {error: 'Ошибка создания новой комнаты', code: 10}
+    createRoomError: {error: 'Ошибка создания новой комнаты', code: 10},
+    roomIdNotSet: {error: 'Не указана ID комнаты', code: 11},
+    roomNotFound: {error: 'Указанная комната не найдена', code: 12}
+
 
 
 };

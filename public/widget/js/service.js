@@ -2,7 +2,7 @@
  * Created by Алексей on 21.03.2015.
  */
 
-app.service('ws', function($http){
+app.service('ws', function($http, tools){
 
     var self = this;
     var callbackFunctions = {};
@@ -16,16 +16,11 @@ app.service('ws', function($http){
     var connection = new ReconnectingWebSocket('ws://localhost:3310');
 
     connection.onopen = function () {
-
-        console.log('open');
-
         self.trigger('connect');
     };
 
     connection.onclose = function() {
-
-        console.log('closed');
-
+        self.trigger('disconnect');
     };
 
     connection.onerror = function (error) {
@@ -41,43 +36,75 @@ app.service('ws', function($http){
             return;
         }
 
-        console.log('WS receive <<', json);
+        console.log('WS receive <<', json.e, json.d);
 
-        if(!json.event)
-            return console.error('Во входящем сообщении нет поля event');
+        if(!json.e)
+            return console.error('Во входящем сообщении нет поля "e"');
 
-        var mes = _.omit(json, ['event', '_cb']);
-
-        if(json._cb) {
-            callbackFunctions[json._cb](mes)
-            delete callbackFunctions[json._cb];
+        if(json.c) {
+            callbackFunctions[json.c](json.d);
+            delete callbackFunctions[json.c];
         } else {
-            self.trigger(json.event, mes);
+            self.trigger(json.e, json.d);
         }
     };
 
 
     self.send = function(name, data, callback){
 
+        var message = {};
+
         if(typeof callback == 'function') {
-            var cbCode = ramdomString(4);
-            data._cb = cbCode;
+            var cbCode = tools.ramdomString(4);
+            message.c = cbCode;
             callbackFunctions[cbCode] = callback;
         }
 
-        data.event = name;
-        connection.send(JSON.stringify(data));
+        message.e = name;
+        message.d = data;
+
+        connection.send(JSON.stringify(message));
         console.log('WS send >>', data);
     };
 
+    MicroEvent.mixin(self);
 
 });
 
-var ramdomString = function(c){
-    for (var a = "", b = 0; b < c; b++)
-        a += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890_"[Math.floor(63 * Math.random())];
-    return a
-};
+app.service('tools', function($http){
+    var self = this;
+
+    self.ramdomString = function(c){
+        for (var a = "", b = 0; b < c; b++)
+            a += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890_"[Math.floor(63 * Math.random())];
+        return a
+    };
+
+    self.isFramed = function(){
+        try {
+            return window != window.top || document != top.document || self.location != top.location;
+        } catch (e) {
+            return true;
+        }
+    };
+
+    self.validateEmail = function(email){
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    };
+
+    self.parseGetParams = function() {
+        var $_GET = {};
+        var __GET = window.location.search.substring(1).split("&");
+        for(var i=0; i<__GET.length; i++) {
+            var getVar = __GET[i].split("=");
+            $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1];
+        }
+        return $_GET;
+    }
+
+});
+
 
 var MicroEvent=function(){};
 MicroEvent.prototype={on:function(a,b,c){b.ctx=c||this;this._events=this._events||{};this._events[a]=this._events[a]||[];this._events[a].push(b);return this},

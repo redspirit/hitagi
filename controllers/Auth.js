@@ -275,8 +275,6 @@ exports.socket_test = function(s, d){
 
 exports.socket_chat = function(s, d, callback){
 
-    console.log('CHAT', d);
-
     callback({status: 'ok'});
 
 };
