@@ -29,9 +29,11 @@ app.controller('MainCtrl', function($scope, $http, ws){
 
     $scope.message = function(text) {
 
-        console.log(text);
+        ws.send('chat', {text: text}, function(status){
 
-        ws.send('mess', {text: text});
+            console.log('cb', status);
+
+        });
 
     };
 

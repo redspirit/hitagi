@@ -272,3 +272,11 @@ exports.socket_test = function(s, d){
     s.sendEvent('echo', {text: d.text});
 
 };
+
+exports.socket_chat = function(s, d, callback){
+
+    console.log('CHAT', d);
+
+    callback({status: 'ok'});
+
+};

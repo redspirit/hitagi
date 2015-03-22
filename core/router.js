@@ -123,11 +123,13 @@ exports.wsRouting = function(routes, message, ws) {
         return console.error('Метод контролера не найден', action);
 
 
-    Controllers[ctrl][action](ws, _.omit(message, 'event'), function(msg){
+    Controllers[ctrl][action](ws, _.omit(message, ['event', '_cb']), function(msg){
 
+        if(!message._cb)
+            return false;
 
-        console.log('Тут вызывается кэлбэк', msg);
-
+        msg._cb = message._cb;
+        ws.sendEvent(message.event, msg);
 
     });
 

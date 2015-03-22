@@ -5,27 +5,22 @@
 app.service('ws', function($http){
 
     var self = this;
+    var callbackFunctions = {};
+
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-
     if (!window.WebSocket) {
         return alert('Вебсокеты не работают!');
     }
 
-    console.log('connecting...');
-
     var connection = new WebSocket('ws://localhost:3310');
 
     connection.onopen = function () {
-
-        console.info('ws open');
-
+        self.trigger('connect');
     };
 
     connection.onerror = function (error) {
-
-        console.info('ws error');
-
+        self.trigger('error');
     };
 
 
@@ -42,11 +37,25 @@ app.service('ws', function($http){
         if(!json.event)
             return console.error('Во входящем сообщении нет поля event');
 
-        self.trigger(json.event, json);
+        var mes = _.omit(json, ['event', '_cb']);
+
+        if(json._cb) {
+            callbackFunctions[json._cb](mes)
+            delete callbackFunctions[json._cb];
+        } else {
+            self.trigger(json.event, mes);
+        }
     };
 
 
-    self.send = function(name, data){
+    self.send = function(name, data, callback){
+
+        if(typeof callback == 'function') {
+            var cbCode = ramdomString(4);
+            data._cb = cbCode;
+            callbackFunctions[cbCode] = callback;
+        }
+
         data.event = name;
         connection.send(JSON.stringify(data));
         console.log('WS send >>', data);
@@ -54,6 +63,12 @@ app.service('ws', function($http){
 
 
 });
+
+var ramdomString = function(c){
+    for (var a = "", b = 0; b < c; b++)
+        a += "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890_"[Math.floor(63 * Math.random())];
+    return a
+};
 
 var MicroEvent=function(){};
 MicroEvent.prototype={on:function(a,b,c){b.ctx=c||this;this._events=this._events||{};this._events[a]=this._events[a]||[];this._events[a].push(b);return this},

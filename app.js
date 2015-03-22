@@ -38,8 +38,8 @@ var ws_routes = {
     'connect':                          'auth.socket_connect',         // подключение к сокету
     'disconnect':                       'auth.socket_disconnect',      // отключение от сокета
 
-    'mess':             'auth.socket_test'
-    //'user:position':            'user.setPosition'
+    'mess':             'auth.socket_test',
+    'chat':             'auth.socket_chat'
 };
 
 server.Start(routes, ws_routes);
