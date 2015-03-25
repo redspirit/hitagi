@@ -66,6 +66,32 @@ exports.widget_init = function(s, d, callback) {
 
     });
 
+};
+
+exports.chat_message = function(s, d, callback) {
+
+    if(!s.user)
+        return callback(errors.noChatUser);
+
+    var text = d.t;
+    var roomId = d.r;
+
+    if(!text)
+        return callback(errors.emptyMessage);
+
+    if(!data.isObjectId(roomId))
+        return callback(errors.roomIdNotSet);
+
+
+    data.History.add({
+        text: text,
+        user: s.user._id,
+        room: data.ObjectId(roomId)
+    }, function(err, doc){
+
+        console.log('Сообщение от', s.user.name, ':', text);
+
+    });
 
 
 };

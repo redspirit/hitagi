@@ -28,7 +28,7 @@ HistorySchema.statics.add = function(d, cb){
     var History = this;
     var hist = new History({
         t: d.text,
-        d: d.date,
+        d: new Date().valueOf(),
         u: d.user,
         r: d.room
     });

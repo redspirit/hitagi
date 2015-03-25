@@ -16,7 +16,9 @@ module.exports = {
     createRoomError: {error: 'Ошибка создания новой комнаты', code: 10},
     roomIdNotSet: {error: 'Не указана ID комнаты', code: 11},
     roomNotFound: {error: 'Указанная комната не найдена', code: 12},
-    noGuestCode: {error: 'Нет кода для регистрации гостя', code: 13}
+    noGuestCode: {error: 'Нет кода для регистрации гостя', code: 13},
+    noChatUser: {error: 'Пользователь чата не определен', code: 14},
+    emptyMessage: {error: 'Пустое сообщение в комнату', code: 15}
 
 
 

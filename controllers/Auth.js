@@ -276,11 +276,13 @@ exports.sing_in_guest = function(s, d, callback){
     if(!d.code)
         return callback(errors.noGuestCode);
 
-
     data.User.register_guest(d.code, d.nick, s.ip, function(err, guest){
+
+        s.user = guest;
 
         callback(guest.clearGuest());
 
+        console.log('Guest sign-in', guest.name);
 
     });
 

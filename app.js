@@ -43,7 +43,7 @@ var ws_routes = {
 
 
 
-    'chat':                             'auth.socket_chat'
+    'chat':                             'room.chat_message'
 };
 
 server.Start(routes, ws_routes);

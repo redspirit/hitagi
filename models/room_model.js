@@ -59,7 +59,22 @@ RoomSchema.statics.byUser = function(user, cb){
 
 RoomSchema.statics.info = function(id, cb){
     var Room = this;
-    Room.findById(id, cb);
+    Room.findById(id, function(err, room){
+
+        if(!room)
+            return cb(null, null);
+
+        mongoose.dataset.History.find({r: room._id}, function(err, messages){
+
+            var roomObj = room.toObject();
+            roomObj.messages = messages;
+
+            cb(null, roomObj);
+
+        });
+
+
+    });
 };
 
 

@@ -35,3 +35,6 @@ models.forEach(function (model) {
 
 
 exports.ObjectId = mongoose.Types.ObjectId;
+exports.isObjectId = mongoose.Types.ObjectId.isValid;
+
+mongoose.dataset = exports;
