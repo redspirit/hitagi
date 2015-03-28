@@ -1,10 +1,12 @@
 var app = angular.module('widget', []);
 
-app.controller('MainCtrl', function($scope, $http, tools, ws){
+app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
     var urlParams = tools.parseGetParams();
     $scope.isAuth = false;
     $scope.me = {};
+
+    console.log('location', $location.search());
 
     if(!tools.isFramed()) {
         alert('Запущено не во фрейме!');

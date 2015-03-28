@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var moment = require('moment');
 var errors = require('../core/errors.js');
+var _ = require('underscore');
 
 var RoomSchema = new Schema({
     alias: {
@@ -21,6 +22,10 @@ var RoomSchema = new Schema({
     },
     create_date: {
         type: Date
+    },
+    messages_count: {
+        type: Number,
+        default: 0
     },
     owner: {
         type: Schema.Types.ObjectId
@@ -59,22 +64,60 @@ RoomSchema.statics.byUser = function(user, cb){
 
 RoomSchema.statics.info = function(id, cb){
     var Room = this;
-    Room.findById(id, function(err, room){
+    Room.findById(id, cb);
+};
 
-        if(!room)
-            return cb(null, null);
+RoomSchema.methods.history = function(query, cb){
 
-        mongoose.dataset.History.find({r: room._id}, function(err, messages){
+    var room = this;
 
-            var roomObj = room.toObject();
-            roomObj.messages = messages;
+    /*
+     query
+         skip:0, // Starting Row
+         limit:10, // Ending Row
+         sort:{
+            date_added: -1 //Sort by Date Added DESC
+     */
 
-            cb(null, roomObj);
+    query.sort = {
+        d: -1
+    };
 
+    mongoose.dataset.History.find({r: room._id}, 't d u n', query, function(err, messages){
+
+        if(err)
+            return cb(err, null);
+
+        /*
+        var output = [];
+        messages.forEach(function(mess){
+            output.push(_.pick(mess, ['t', 'd', 'u', 'n']));
         });
+        */
 
+        cb(null, messages);
 
     });
+
+};
+
+
+RoomSchema.methods.pushMessage = function(text, user, cb){
+    var room = this;
+
+    var hist = new mongoose.dataset.History({
+        t: text,
+        d: Date.now(),
+        u: user._id,
+        r: room._id,
+        n: user.name
+    });
+
+    room.messages_count++;
+    room.save();
+
+    hist.save(cb);
+
 };
 
 

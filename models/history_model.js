@@ -12,8 +12,11 @@ var HistorySchema = new Schema({
         type: String,
         default: ''
     },
+    n: {                // nick
+        type: String
+    },
     d: {                // date
-        type: Number
+        type: Date
     },
     u: {                // user
         type: Schema.Types.ObjectId
@@ -22,23 +25,6 @@ var HistorySchema = new Schema({
         type: Schema.Types.ObjectId
     }
 });
-
-
-HistorySchema.statics.add = function(d, cb){
-    var History = this;
-    var hist = new History({
-        t: d.text,
-        d: new Date().valueOf(),
-        u: d.user,
-        r: d.room
-    });
-    hist.save(cb);
-};
-
-HistorySchema.statics.byRoom = function(room, cb){
-    var History = this;
-    History({room: room}, cb);
-};
 
 
 exports.model = HistorySchema;

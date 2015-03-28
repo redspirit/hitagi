@@ -55,14 +55,21 @@ exports.widget_init = function(s, d, callback) {
     if(!d.roomId)
         return callback(errors.roomIdNotSet);
 
-    console.log('Инициализация комнаты', d.roomId);
-
     data.Room.info(d.roomId, function(err, room){
 
         if(!room)
             return callback(errors.roomNotFound);
 
-        callback(room);
+        console.log('Инициализация комнаты', room.caption);
+
+        room.history({limit: 30}, function(err, messages){
+
+            var roomObj = room.toObject();
+            roomObj.messages = messages;
+
+            callback(roomObj);
+
+        });
 
     });
 
@@ -79,19 +86,20 @@ exports.chat_message = function(s, d, callback) {
     if(!text)
         return callback(errors.emptyMessage);
 
-    if(!data.isObjectId(roomId))
-        return callback(errors.roomIdNotSet);
+
+    data.Room.info(roomId, function(err, room){
+
+        if(!room)
+            return callback(errors.roomNotFound);
 
 
-    data.History.add({
-        text: text,
-        user: s.user._id,
-        room: data.ObjectId(roomId)
-    }, function(err, doc){
+        room.pushMessage(text, s.user, function(err, mess){
 
-        console.log('Сообщение от', s.user.name, ':', text);
+            console.log('Сообщение от', s.user.name, ':', text);
+
+
+        })
 
     });
-
 
 };
