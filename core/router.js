@@ -128,7 +128,7 @@ exports.wsRouting = function(routes, message, ws) {
         if(!message.c)
             return false;
 
-        ws.sendEvent(message.e, data, message.c);
+        ws.sendJson(message.e, data, message.c);
 
     });
 
