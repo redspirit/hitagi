@@ -13,7 +13,9 @@
 
 <div class="room-pane">
 
-    Angular {{roomId}}
+    <div ng-repeat="mess in room.messages | orderBy:'d'">
+        {{mess.n}}: {{mess.t}}
+    </div>
 
 </div>
 <div class="roster-pane">
@@ -33,9 +35,7 @@
 
     </div>
 
-
 </div>
-
 
 
 <script src="/_assets/js/vendor/reconnecting-websocket.min.js"></script>

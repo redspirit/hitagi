@@ -64,7 +64,7 @@ app.service('ws', function($http, tools){
         message.d = data;
 
         connection.send(JSON.stringify(message));
-        console.log('WS send >>', data);
+        console.log('WS send >>', name, data);
     };
 
     MicroEvent.mixin(self);

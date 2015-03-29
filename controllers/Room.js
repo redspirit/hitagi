@@ -6,6 +6,7 @@ var data = require('./../core/dataset.js');
 var tools = require('../core/tools.js');
 var errors = require('../core/errors.js');
 var CONST = require('../core/const.js');
+var _ = require('underscore');
 
 
 exports.make = function(req, res){
@@ -95,10 +96,10 @@ exports.chat_message = function(s, d, callback) {
 
         room.pushMessage(text, s.user, function(err, mess){
 
+            s.toRoom(room._id.toString(), 'chat', _.omit(mess.toObject(), ['__v', 'r']));
+
             console.log('Сообщение от', s.user.name, ':', text);
-
-
-        })
+        });
 
     });
 

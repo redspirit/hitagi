@@ -276,11 +276,16 @@ exports.sing_in_guest = function(s, d, callback){
     if(!d.code)
         return callback(errors.noGuestCode);
 
+    if(!d.room)
+        return callback(errors.roomIdNotSet);
+
     data.User.register_guest(d.code, d.nick, s.ip, function(err, guest){
 
         s.setUser(guest._id);
 
         s.user = guest;
+
+        s.join(d.room);
 
         callback(guest.clearGuest());
 

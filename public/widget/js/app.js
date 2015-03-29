@@ -28,7 +28,8 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
         ws.send('sing_in_guest', {
             code: code,
-            nick: nick
+            nick: nick,
+            room: $scope.roomId
         }, function(userInfo){
 
             if(userInfo.error)
@@ -72,7 +73,10 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             if(!code)
                 return false;
 
-            ws.send('sing_in_guest', {code: code}, function(userInfo){
+            ws.send('sing_in_guest', {
+                code: code,
+                room: $scope.roomId
+            }, function(userInfo){
                 if(userInfo.error)
                     return alert(userInfo.error);
 
@@ -88,6 +92,14 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
     ws.on('echo', function(message){
 
         console.log('echo ', message);
+
+    });
+
+
+    ws.on('chat', function(message){
+
+        $scope.room.messages.push(message);
+        $scope.$apply();
 
     });
 
