@@ -8,6 +8,7 @@ var tools = require('../core/tools.js');
 var errors = require('../core/errors.js');
 var cache = require('memory-cache');
 var CONST = require('../core/const.js');
+var _ = require('underscore');
 
 exports.register = function(req, res){
 
@@ -263,6 +264,30 @@ exports.socket_disconnect = function(s, d){
 
     console.log('Сокет отключен', s.ip);
 
+    if(!s.user)
+        return false;
+
+
+    var hasUser = false;
+
+    _.each(s.connections, function(sock, key){
+
+        if(!sock.user || hasUser)
+            return false;
+
+        hasUser = s.user._id.equals(sock.user._id);
+
+    });
+
+    if(!hasUser) {
+
+        // отпраляем команду выхода из комнаты
+
+        s.toAllRooms('leaved', _.pick(s.user, '_id'));
+
+    }
+
+
 };
 
 exports.socket_chat = function(s, d, callback){
@@ -279,17 +304,28 @@ exports.sing_in_guest = function(s, d, callback){
     if(!d.room)
         return callback(errors.roomIdNotSet);
 
-    data.User.register_guest(d.code, d.nick, s.ip, function(err, guest){
+    data.User.register_guest(d.code, d.nick, s.ip, function(err, user){
 
-        s.setUser(guest._id);
+        var guest = user.clearGuest();
 
-        s.user = guest;
+        data.Room.info(d.room, function(err, room){
 
+            room.pushUser(user._id);
+
+        });
+
+
+
+        s.setUser(user._id);
+        s.user = user;
         s.join(d.room);
+        callback(guest);
 
-        callback(guest.clearGuest());
 
-        console.log('Guest sign-in', guest.name);
+        guest.room = d.room;
+        s.toRoom(d.room, 'joined', guest);
+
+        console.log('Guest sign-in', user.name);
 
     });
 

@@ -101,7 +101,26 @@ app.service('tools', function($http){
             $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1];
         }
         return $_GET;
-    }
+    };
+
+    self.deleteFromUsers = function(arr, id) {
+
+        return _.filter(arr, function(item){
+            return item._id != id;
+        });
+
+    };
+
+    self.getFromUsers = function(arr, id) {
+
+        return _.find(arr, function(item){
+            return item._id == id;
+        });
+
+    };
+
+
+
 
 });
 

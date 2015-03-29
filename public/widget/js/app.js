@@ -5,6 +5,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
     var urlParams = tools.parseGetParams();
     $scope.isAuth = false;
     $scope.me = {};
+    $scope.users = {};
 
     console.log('location', $location.search());
 
@@ -89,9 +90,27 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
     });
 
-    ws.on('echo', function(message){
+    ws.on('joined', function(user){
 
-        console.log('echo ', message);
+        var hasUser = tools.getFromUsers($scope.room.users, user._id);
+
+        if(hasUser)
+            return false;
+
+        $scope.room.users.push(user);
+
+        $scope.$apply();
+
+    });
+
+    ws.on('leaved', function(user){
+
+        if(!user._id)
+            return false;
+
+        $scope.room.users = tools.deleteFromUsers($scope.room.users, user._id);
+
+        $scope.$apply();
 
     });
 
@@ -102,6 +121,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         $scope.$apply();
 
     });
+
 
 
 });

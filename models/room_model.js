@@ -101,6 +101,32 @@ RoomSchema.methods.history = function(query, cb){
 
 };
 
+RoomSchema.methods.pushUser = function(user, cb){
+    var room = this;
+
+    var hasUser = false;
+    room.users.forEach(function(uid){
+        if(hasUser)
+            return false;
+        hasUser = user.equals(uid);
+    });
+
+    if(!hasUser)
+        room.users.push(user);
+
+    room.save(cb);
+};
+
+RoomSchema.methods.removeUser = function(user){
+    var room = this;
+
+    room.users = _.filter(room.users, function(uid){
+        return !uid.equals(user);
+    });
+
+    room.save(cb);
+};
+
 
 RoomSchema.methods.pushMessage = function(text, user, cb){
     var room = this;
