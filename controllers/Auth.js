@@ -308,12 +308,13 @@ exports.sing_in_guest = function(s, d, callback){
 
         var guest = user.clearGuest();
 
+        /*
         data.Room.info(d.room, function(err, room){
 
             room.pushUser(user._id);
 
         });
-
+        */
 
 
         s.setUser(user._id);
