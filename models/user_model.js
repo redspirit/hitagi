@@ -65,6 +65,10 @@ UserSchema.methods.clearGuest = function(){
     return _.pick(this.toObject(), ['_id', 'name', 'status', 'last_login', 'guest_code', 'last_ip']);
 };
 
+UserSchema.methods.clearMember = function(){
+    return _.pick(this.toObject(), ['_id', 'name', 'status', 'last_login', 'avatar', 'last_ip']);
+};
+
 UserSchema.statics.register = function(data, cb){
     var User = this;
 
@@ -204,7 +208,18 @@ UserSchema.statics.getByEmail = function(email, cb){
 UserSchema.statics.usersList = function(ids, cb){
     var User = this;
     // сконвертить в ObkectId
-    User.find({_id: {'$in': ids}}, cb);
+    
+    console.log('ids', ids);
+    
+    User.find({_id: {'$in': ids}}, function(err, users){
+        
+        var result = _.map(users, function(user){
+            return user.clearMember();
+        });
+        
+        cb(err, result);
+        
+    });
 };
 
 exports.model = UserSchema;
