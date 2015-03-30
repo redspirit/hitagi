@@ -29,10 +29,7 @@ var RoomSchema = new Schema({
     },
     owner: {
         type: Schema.Types.ObjectId
-    },
-    users: [{
-        type: Schema.Types.ObjectId
-    }]
+    }
 });
 
 
