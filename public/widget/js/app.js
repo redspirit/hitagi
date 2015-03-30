@@ -50,11 +50,12 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
     $scope.message = function(text) {
 
-        ws.send('chat', {t: text, r: $scope.room._id}, function(result){
+        if(!text)
+            return false;
 
+        ws.send('chat', {t: text, r: $scope.room._id});
 
-
-        });
+        $scope.form.message = '';
 
     };
 
@@ -69,6 +70,8 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         ws.send('widget_init', {roomId: urlParams.id}, function(room){
 
             $scope.room = room;
+
+
 
             var code = localStorage['guestCode'];
             if(!code)

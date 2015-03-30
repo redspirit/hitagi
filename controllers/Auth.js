@@ -285,6 +285,7 @@ exports.socket_disconnect = function(s, d){
 
         s.toAllRooms('leaved', _.pick(s.user, '_id'));
 
+        s.leaveAll();
     }
 
 

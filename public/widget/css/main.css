@@ -1,18 +1,22 @@
+b{
+    font-weight: bold;
+}
 *:focus{
     outline: none;
 }
 .room-pane{
-
     position: absolute;
     left: 0;
     top: 0;
     bottom: 30px;
     right: 150px;
-
-    padding: 8px;
-
-    background-color: #017ebc;
-
+    /*background-color: #017ebc;*/
+    overflow: hidden;
+}
+.room-pane .message-line{
+    margin: 0 0 3px 2px;
+    box-sizing: border-box;
+    font-size: 90%;
 }
 .roster-pane{
 
@@ -33,12 +37,12 @@
     left: 0;
     bottom: 0;
     right: 0;
-    height: 30px;
+    height: 27px;
 }
 .message-pane input{
      border: none;
      padding: 4px;
-     font-size: 110%;
+     font-size: 100%;
      width: 100%;
      box-sizing: border-box;
 }

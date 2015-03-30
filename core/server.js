@@ -116,17 +116,19 @@ function ws_paths(routes){
 
         };
 
-        // todo удлить юзера из всех комнат
-        ws.leaveAll = function(roomName){
+        // удлить юзера из всех комнат
+        ws.leaveAll = function(){
 
             if(!ws.user)
                 return false;
 
             var userId = ws.user._id.toString();
-            var arr = userRooms[roomName];
 
-
-            console.log('room leave all', userRooms);
+            _.each(userRooms, function(users, key){
+                var idx = users.indexOf(userId);
+                if(idx > -1)
+                    userRooms[key].splice(idx, 1);
+            });
 
         };
 
@@ -146,7 +148,7 @@ function ws_paths(routes){
 
         };
 
-        // todo отправить сообщение во все комнаты в которых состоит юзер
+        // отправить сообщение во все комнаты в которых состоит юзер
         ws.toAllRooms = function(name, data){
 
             if(!ws.user)
@@ -160,7 +162,6 @@ function ws_paths(routes){
                     ws.toRoom(key, name, data);
 
             });
-
 
         };
 

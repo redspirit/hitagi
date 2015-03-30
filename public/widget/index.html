@@ -6,21 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/_assets/css/perfect-scrollbar.min.css">
 </head>
 <body>
 
 
 
-<div class="room-pane">
+<div class="room-pane" autoscroll-down>
 
-    <div ng-repeat="mess in room.messages | orderBy:'d'">
-        {{mess.n}}: {{mess.t}}
+    <div ng-repeat="mess in room.messages | orderBy:'d'" class="message-line">
+        <b>{{mess.n}}</b>: {{mess.t}}
     </div>
 
 </div>
 <div class="roster-pane">
 
-    <div ng-repeat="user in room.users">
+    <div ng-repeat="user in room.users" ng-click="tet()">
         {{user.name}}
     </div>
 
@@ -43,6 +44,7 @@
 <script src="/_assets/js/vendor/reconnecting-websocket.min.js"></script>
 <script src="/_assets/js/vendor/underscore-min.js"></script>
 <script src="/_assets/js/vendor/jquery-2.1.1.min.js"></script>
+<script src="/_assets/js/vendor/perfect-scrollbar.jquery.min.js"></script>
 <script src="/_assets/js/angular/angular.js"></script>
 <script src="js/app.js"></script>
 <script src="js/directive.js"></script>
