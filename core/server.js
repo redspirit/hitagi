@@ -182,6 +182,10 @@ function ws_paths(routes){
             });
 
         };
+        
+        ws.roomUsers = function(room){
+            return userRooms[room];
+        };
 
         // зарегистрировать сокет указанного юзера
         ws.setUser = function(userId){
