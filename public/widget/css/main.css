@@ -4,14 +4,20 @@ b{
 *:focus{
     outline: none;
 }
+body{
+
+}
 .room-pane{
     position: absolute;
     left: 0;
     top: 0;
     bottom: 30px;
     right: 150px;
-    /*background-color: #017ebc;*/
-    overflow: hidden;
+
+    background-image: url("/_assets/img/backgrounds/r800_10000116_orig.jpg");
+    background-size: cover;
+    background-position: bottom;
+
 }
 .room-pane .message-line{
     margin: 0 0 3px 2px;
@@ -29,7 +35,7 @@ b{
 
     padding: 8px;
 
-    background-color: #24aca5;
+    /*background-image: url("/_assets/img/backgrounds/r800_10000142_tail.jpg");*/
 
 }
 .message-pane{

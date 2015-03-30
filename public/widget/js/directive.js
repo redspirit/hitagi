@@ -27,7 +27,7 @@ app.directive('autoscrollDown', function () {
             var enableAutoscroll = true;
             var forceScroll = true;
 
-            element.perfectScrollbar({'wheelSpeed':2, 'suppressScrollX':true});
+            element.perfectScrollbar({'wheelSpeed':1, 'suppressScrollX':true});
 
             element.scroll(function(e){
                 enableAutoscroll = element.prop('offsetHeight') + element.prop('scrollTop') + 15 >= element.prop('scrollHeight');
