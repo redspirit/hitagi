@@ -7,13 +7,14 @@ app.service('ws', function($http, tools){
     var self = this;
     var callbackFunctions = {};
 
+    var wsServer = location.hostname;
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
     if (!window.WebSocket) {
         return alert('Вебсокеты не работают!');
     }
 
-    var connection = new ReconnectingWebSocket('ws://localhost:3310');
+    var connection = new ReconnectingWebSocket('ws://' + wsServer + ':3310');
 
     connection.onopen = function () {
         self.trigger('connect');
