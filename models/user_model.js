@@ -201,4 +201,10 @@ UserSchema.statics.getByEmail = function(email, cb){
     User.findOne({email: email}, cb);
 };
 
+UserSchema.statics.usersList = function(ids, cb){
+    var User = this;
+    // сконвертить в ObkectId
+    User.find({_id: {'$in': ids}}, cb);
+};
+
 exports.model = UserSchema;
