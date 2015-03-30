@@ -69,9 +69,10 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
         ws.send('widget_init', {roomId: urlParams.id}, function(room){
 
+            if(room.error)
+                return alert(room.error);
+
             $scope.room = room;
-
-
 
             var code = localStorage['guestCode'];
             if(!code)
