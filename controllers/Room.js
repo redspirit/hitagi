@@ -65,7 +65,7 @@ exports.widget_init = function(s, d, callback) {
 
         room.history({limit: 30}, function(err, messages){
 
-            room.User.userList(s.roomUsers(d.roomId), function(err, users){
+            room.User.usersList(s.roomUsers(d.roomId), function(err, users){
                 
                 var roomObj = room.toObject();
                 roomObj.messages = messages;
