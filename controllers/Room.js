@@ -65,11 +65,16 @@ exports.widget_init = function(s, d, callback) {
 
         room.history({limit: 30}, function(err, messages){
 
-            var roomObj = room.toObject();
-            roomObj.messages = messages;
+            room.User.userList(s.roomUsers(d.roomId), function(err, users){
+                
+                var roomObj = room.toObject();
+                roomObj.messages = messages;
+                roomObj.users = users;
+    
+                callback(roomObj);
 
-            callback(roomObj);
-
+            });
+            
         });
 
     });
