@@ -7,6 +7,16 @@ b{
 body{
 
 }
+.splash-screen{
+    z-index: 99999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: wheat;
+    text-align: center;
+}
 .room-pane{
     position: absolute;
     left: 0;

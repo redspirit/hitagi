@@ -74,6 +74,10 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
             $scope.room = room;
 
+
+            $scope.splashScreen = false;
+            $scope.$apply();
+            
             var code = localStorage['guestCode'];
             if(!code)
                 return false;
