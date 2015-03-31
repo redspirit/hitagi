@@ -150,9 +150,6 @@ exports.forgot_set = function(req, res){
         if(origCode != code)
             return res.send(errors.wrongVerificationCode);
 
-
-        console.log(password, tools.sha1(password));
-
         user.password = tools.sha1(password);
         user.status = CONST.USER_STATUS_REGULAR;
         user.save(function(err, doc){

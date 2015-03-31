@@ -68,8 +68,6 @@ function ws_paths(routes){
         ws.id = connectionIDCounter ++;
         connections[ws.id] = ws;
 
-        console.log('connect ID', ws.id);
-
         // добавить юзера в комнату
         ws.join = function(roomName){
 
@@ -88,8 +86,6 @@ function ws_paths(routes){
             } else {
                 userRooms[roomName] = [userId];
             }
-
-            console.log('room join', userRooms);
 
         };
 
@@ -111,8 +107,6 @@ function ws_paths(routes){
                     userRooms[roomName].splice(idx, 1);
 
             }
-
-            console.log('room leave', userRooms);
 
         };
 

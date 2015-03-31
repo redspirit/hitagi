@@ -62,7 +62,7 @@ exports.widget_init = function(s, d, callback) {
 
         room.shows++;
         room.save();
-        
+
         console.log('Инициализация комнаты', room.caption);
 
         return room.history({limit: 30}, function(err, messages){
@@ -105,7 +105,6 @@ exports.chat_message = function(s, d, callback) {
 
             s.toRoom(room._id.toString(), 'chat', _.omit(mess.toObject(), ['__v', 'r']));
 
-            console.log('Сообщение от', s.user.name, ':', text);
         });
 
     });

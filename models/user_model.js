@@ -209,8 +209,6 @@ UserSchema.statics.usersList = function(ids, cb){
     var User = this;
     // сконвертить в ObkectId
     
-    console.log('ids', ids);
-    
     User.find({_id: {'$in': ids}}, function(err, users){
         
         var result = _.map(users, function(user){
