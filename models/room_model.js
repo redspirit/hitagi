@@ -29,6 +29,10 @@ var RoomSchema = new Schema({
     },
     owner: {
         type: Schema.Types.ObjectId
+    },
+    shows: {
+        type: Number,
+        default: 0
     }
 });
 

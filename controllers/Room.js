@@ -14,7 +14,6 @@ exports.make = function(req, res){
     if(!req.user)
         return res.send(errors.authRequire);
 
-
     var user = req.user;
     var fields = {
         alias: req.body.alias,
@@ -22,7 +21,7 @@ exports.make = function(req, res){
         owner: user._id
     };
 
-    data.Room.make(fields, function(err, room){
+    return data.Room.make(fields, function(err, room){
 
         if(err)
             return res.send(errors.createRoomError);
@@ -43,7 +42,7 @@ exports.list = function(req, res) {
 
     var user = req.user;
 
-    data.Room.byOwner(user._id, function(err, rooms){
+    return data.Room.byOwner(user._id, function(err, rooms){
 
         res.send(rooms);
 
@@ -56,14 +55,17 @@ exports.widget_init = function(s, d, callback) {
     if(!d.roomId)
         return callback(errors.roomIdNotSet);
 
-    data.Room.info(d.roomId, function(err, room){
+    return data.Room.info(d.roomId, function(err, room){
 
         if(!room)
             return callback(errors.roomNotFound);
 
+        room.shows++;
+        room.save();
+        
         console.log('Инициализация комнаты', room.caption);
 
-        room.history({limit: 30}, function(err, messages){
+        return room.history({limit: 30}, function(err, messages){
 
             data.User.usersList(s.roomUsers(d.roomId), function(err, users){
                 
@@ -93,7 +95,7 @@ exports.chat_message = function(s, d, callback) {
         return callback(errors.emptyMessage);
 
 
-    data.Room.info(roomId, function(err, room){
+    return data.Room.info(roomId, function(err, room){
 
         if(!room)
             return callback(errors.roomNotFound);

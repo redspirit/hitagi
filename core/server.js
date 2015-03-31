@@ -230,11 +230,19 @@ function ws_paths(routes){
 
         // отправить сообщение в указанный сокет
         ws.sendJson = function(name, data, cbName){
-            ws.send(JSON.stringify({
-                e: name,
-                d: data,
-                c: cbName
-            }));
+
+            try {
+
+                ws.send(JSON.stringify({
+                    e: name,
+                    d: data,
+                    c: cbName
+                }));
+
+            } catch (e){
+                console.error('Ошибка отправки сообщения в сокет', ws.id, name, data);
+            }
+
         };
 
         // отправить сообщение во все мои сокеты
