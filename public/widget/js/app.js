@@ -110,6 +110,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         $scope.room.messages.push({
             type: 'joined',
             n: user.name,
+            d: moment().format(),
             t: 'пользователь зашел в чат'
         });
 
@@ -127,6 +128,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         $scope.room.messages.push({
             type: 'leaved',
             n: user.name,
+            d: moment().format(),
             t: 'пользователь вышел из чата'
         });
 
