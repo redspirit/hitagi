@@ -280,8 +280,7 @@ exports.socket_disconnect = function(s, d){
 
         // отпраляем команду выхода из комнаты
 
-        s.toAllRooms('leaved', _.pick(s.user, '_id'));
-
+        s.toAllRooms('leaved', _.pick(s.user, ['_id', 'name']));
         s.leaveAll();
     }
 
