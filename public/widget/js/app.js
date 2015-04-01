@@ -107,6 +107,12 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
         $scope.room.users.push(user);
 
+        $scope.room.messages.push({
+            type: 'joined',
+            n: user.n,
+            t: 'пользователь зашел в чат'
+        });
+
         $scope.$apply();
 
     });
@@ -117,6 +123,12 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             return false;
 
         $scope.room.users = tools.deleteFromUsers($scope.room.users, user._id);
+
+        $scope.room.messages.push({
+            type: 'leaved',
+            n: user.n,
+            t: 'пользователь вышел из чата'
+        });
 
         $scope.$apply();
 
