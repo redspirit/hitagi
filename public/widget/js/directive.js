@@ -44,12 +44,12 @@ app.directive('autoscrollDown', function () {
             }, 3000);
 
 
-            test = element.children();
+            //test = element;
 
             $scope.$watch(
                 function () {
                     //return element.find('.message-line').length;
-                    return element.children().length;
+                    return element.children().children().length;
                 },
                 function () {
 

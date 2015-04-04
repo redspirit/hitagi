@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Чат</title>
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
@@ -11,22 +12,52 @@
 <body>
 
 
+<div class="window-area">
+    <div class="chat-area">
+        <div class="chat-list" autoscroll-down>
+            <ul>
 
-<div class="room-pane" autoscroll-down>
+                <li ng-repeat="mess in room.messages | orderBy:'d'" ng-class="{me: mess.u == me._id}">
+                    <div class="name">
+                        <span class="">{{mess.n}}</span>
+                    </div>
+                    <div class="message">
+                        <p>{{mess.t}}</p>
+                        <span class="msg-time">5:00 pm</span>
+                    </div>
+                </li>
 
-    <div ng-repeat="mess in room.messages | orderBy:'d'" class="message-line">
-        <b>{{mess.n}}</b>: {{mess.t}}
+            </ul>
+        </div>
+        <div class="input-area">
+            <div class="input-wrapper">
+                <input type="text" placeholder="Введите ваше сообщение" ng-model="form.message" ng-enter="message(form.message)">
+                <i class="fa fa-smile-o"></i>
+                <i class="fa fa-paperclip"></i>
+            </div>
+            <input type="button" value="Ввод" class="send-btn">
+        </div>
     </div>
+    <div class="right-tabs">
 
-</div>
-<div class="roster-pane">
+        <div class="tabs-container">
 
-    <div ng-repeat="user in room.users" ng-click="tet()">
-        {{user.name}}
+            <ul class="member-list">
+                <li ng-repeat="user in room.users">
+                    <span class="status online">
+                    <i class="fa fa-circle-o"></i></span><span>{{user.name}}</span>
+                </li>
+            </ul>
+
+        </div>
+
+        <i class="fa fa-cog"></i>
     </div>
-
 </div>
 
+
+
+<!--
 <div class="message-pane">
 
     <input ng-show="isAuth" type="text" class="form-control" placeholder="Введите ваше сообщение" ng-model="form.message" ng-enter="message(form.message)"/>
@@ -43,6 +74,8 @@
 <div class="splash-screen" ng-show="splashScreen">
     Загрузка...
 </div>
+
+-->
 
 <script src="/_assets/js/vendor/reconnecting-websocket.min.js"></script>
 <script src="/_assets/js/vendor/underscore-min.js"></script>
