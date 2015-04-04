@@ -110,7 +110,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         $scope.room.messages.push({
             type: 'joined',
             n: user.name,
-            d: moment().format(),
+            d: Date.now(),
             t: 'пользователь зашел в чат'
         });
 

@@ -16,7 +16,7 @@ var HistorySchema = new Schema({
         type: String
     },
     d: {                // date
-        type: Date
+        type: Number
     },
     u: {                // user
         type: Schema.Types.ObjectId
