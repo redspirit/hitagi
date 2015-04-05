@@ -7,6 +7,8 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
     $scope.me = {};
     $scope.users = {};
     $scope.splashScreen = true;
+    $scope.registerScreen = false;
+    $scope.form = {};
 
     if(!tools.isFramed()) {
         alert('Запущено не во фрейме!');
@@ -22,9 +24,11 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
     $scope.singIn = function(nick) {
 
+        if(!nick)
+            return alert('Укажите свой ник!');
+
         var code = localStorage['guestCode'];
         if(!code) code = tools.ramdomString(30);
-
 
         ws.send('sing_in_guest', {
             code: code,
@@ -58,6 +62,48 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
     };
 
+    $scope.showRegisterScreen = function(state){
+        $scope.registerScreen = state;
+    };
+
+    $scope.submitRegister = function(form){
+
+        if(!form.email)
+            return alert('Нужно указать Email');
+
+        if(!form.nick)
+            return alert('Нужно указать ник');
+
+        if(!form.password || form.password.length < 6)
+            return alert('Нужно указать пароль не менее 6 символов');
+
+        if(form.password != form.password2)
+            return alert('Пароли должны совпадать');
+
+
+        ws.send('sing_in', {
+            email: form.email,
+            nick: form.nick,
+            password: form.password,
+            room: $scope.roomId
+        }, function(userInfo){
+
+            if(userInfo.error)
+                return alert(userInfo.error);
+
+            tools.saveUserData({
+                email: form.email,
+                password: form.password
+            });
+
+            $scope.isAuth = true;
+            $scope.me = userInfo;
+            $scope.$apply();
+        });
+
+
+
+    };
 
     /******** EVENTS  *********/
 
@@ -75,8 +121,11 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
 
             var code = localStorage['guestCode'];
-            if(!code)
-                return false;
+            if(!code) {
+                $scope.splashScreen = false;
+                $scope.isAuth = false;
+                return $scope.$apply();
+            }
 
             ws.send('sing_in_guest', {
                 code: code,
@@ -112,8 +161,13 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
         $scope.room.users.push(user);
 
+
+        if(user._id == $scope.me._id)
+            return $scope.$apply();
+
         $scope.room.messages.push({
             type: 'log',
+            class: {'log-user-join': true},
             n: user.name,
             d: Date.now(),
             t: 'зашел в чат'
@@ -132,6 +186,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
         $scope.room.messages.push({
             type: 'log',
+            class: {'log-user-leave': true},
             n: user.name,
             d: moment().format(),
             t: 'вышел из чата'

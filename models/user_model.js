@@ -100,6 +100,9 @@ UserSchema.statics.register_guest = function(code, nick, ip, cb){
         if(guest)
             return cb(null, guest);
 
+        if(!nick)
+            return cb(errors.noGuestNick, null);
+
         var newGuest = new User({
             name: nick,
             guest_code: code,

@@ -24,8 +24,11 @@
 
 <script id="log-message" type="text/ng-template">
 
+    <div class="name">
+        <span class="">{{mess.n}}</span>
+    </div>
     <div class="message">
-        <p><b>{{mess.n}}</b>: {{mess.t}}</p>
+        <p>{{mess.t}}</p>
         <span class="msg-time">{{mess.d | date:'H:mm:ss'}}</span>
     </div>
 
@@ -39,7 +42,7 @@
             <ul>
 
                 <li ng-repeat="mess in room.messages | orderBy:'d'"
-                        ng-class="{me: mess.u == me._id}"
+                        ng-class="mess.class"
                         ng-include="mess.type == 'log' ? 'log-message' : 'user-message'">
                 </li>
 
@@ -55,11 +58,10 @@
 
         </div>
 
-        <div class="input-area" ng-if="!isAuth">
-
-            <label>Укажите свой ник, чтобы начать общение:</label>
-            <input type="text" class="form-control" placeholder="Ник" ng-model="form.newNick" ng-enter="singIn(form.newNick)"/>
-
+        <div class="input-area reg-area" ng-if="!isAuth">
+            <input type="text" class="form-control" placeholder="Чтобы войти как гость укажите ник" ng-model="form.newNick" ng-enter="singIn(form.newNick)"/>
+            <button type="button" class="circle-btn" ng-click="singIn(form.newNick)"><i class="fa fa-sign-in"></i></button>
+            <input type="button" value="Регистрация" ng-click="showRegisterScreen(1)" class="btn"/>
         </div>
 
     </div>
@@ -76,10 +78,57 @@
 
         </div>
 
+        <a href="#" ng-show="me.status == -1" ng-click="showRegisterScreen(1)" class="register-link">Регистрация</a>
         <i class="fa fa-cog"></i>
     </div>
 </div>
 
+
+<div class="register-screen" ng-if="registerScreen">
+
+    <div class="reg-container">
+
+        <h2>Регистрация пользователя</h2>
+
+        <form ng-submit="submitRegister(form)">
+
+            <table>
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="email" ng-model="form.email" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ник</td>
+                    <td>
+                        <input type="text" ng-model="form.nick" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Пароль</td>
+                    <td>
+                        <input type="password" ng-model="form.password" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Пароль еще раз</td>
+                    <td>
+                        <input type="password" ng-model="form.password2" />
+                    </td>
+                </tr>
+            </table>
+
+            <div>
+                <input type="submit" value="Зарегистрироваться"/>
+                <input type="button" value="Отмена" ng-click="showRegisterScreen(0)"/>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 <div class="splash-screen" ng-if="splashScreen">
     <div class="circles">
@@ -90,7 +139,7 @@
 
 <script src="/_assets/js/vendor/reconnecting-websocket.min.js"></script>
 <script src="/_assets/js/vendor/underscore-min.js"></script>
-<script src="/_assets/js/vendor/moment.min.js"></script>
+<script src="/_assets/js/vendor/aes.js"></script>
 <script src="/_assets/js/vendor/jquery-2.1.1.min.js"></script>
 <script src="/_assets/js/vendor/perfect-scrollbar.jquery.min.js"></script>
 <script src="/_assets/js/angular/angular.js"></script>

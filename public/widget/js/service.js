@@ -120,8 +120,36 @@ app.service('tools', function($http){
 
     };
 
+    var passPhrase = 'dsiy33473d';
 
+    self.stringEncode = function(str) {
+        var code = CryptoJS.AES.encrypt(str, passPhrase);
+        return code.toString();
+    };
+    self.stringDecode = function(str) {
+        var code = CryptoJS.AES.decrypt(str, passPhrase);
+        return code.toString(CryptoJS.enc.Utf8);
+    };
 
+    self.saveUserData = function(data) {
+        localStorage['userData'] = self.stringEncode(JSON.stringify(data));
+    };
+
+    self.getUserData = function() {
+
+        var ret = {};
+
+        try {
+
+            ret = JSON.parse(self.stringDecode(localStorage['userData']));
+
+        } catch (e){
+
+        }
+
+        return ret;
+
+    };
 
 });
 

@@ -40,8 +40,7 @@ var ws_routes = {
 
     'widget_init':                      'room.widget_init',
     'sing_in_guest':                    'auth.sing_in_guest',
-
-
+    'sing_in':                          'auth.sing_in',
 
     'chat':                             'room.chat_message'
 };

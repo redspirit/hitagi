@@ -40,7 +40,6 @@ b{
     background: #fff;
     z-index: 10;
 }
-
 .splash-screen{
     position: fixed;
     top: 0;
@@ -79,27 +78,35 @@ b{
     margin-right: -4px;
 }
 .chat-area ul > li{
-    border-top: 1px solid #cfdae1;
+    /*border-top: 1px solid #cfdae1;*/
     overflow: hidden;
     position: relative;
 }
-.chat-area ul > li.me{
+.chat-area ul > li:hover{
     background: #e4eaee;
 }
+
+.chat-area .log-user-join {
+    background: #DAFFDF;
+}
+.chat-area .log-user-leave {
+    background: #FFDEDA;
+}
+
 .chat-area ul > li:first-child{
     border-top: none;
 }
 .chat-area ul .name{
-    padding: 5px;
+    padding: 3px;
     text-align: right;
-    width: 100px;
+    width: 80px;
     float: left;
     color: #5d7185;
     font-weight: bold;
     line-height: 20px;
 }
 .chat-area ul .message{
-    padding: 5px;
+    padding: 3px;
     border-left: 1px solid #cfdae1;
     float: left;
     color: #333f4d;
@@ -162,7 +169,6 @@ b{
 .input-area > input{
     background: #a0b4c0;
     border: none;
-    letter-spacing:1px;
     font-weight: bold;
     color: #fff;
     border-radius: 5px;
@@ -170,7 +176,7 @@ b{
     height: 30px;
     line-height: 30px;
     cursor: pointer;
-    font-family: 'Open Sans', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     outline: none;
 }
 .right-tabs{
@@ -244,4 +250,68 @@ b{
     float: right;
     font-size: 9px;
     margin-top: 4px;
+}
+.register-link{
+    position: absolute;
+    bottom: 17px;
+    right: 88px;
+    color: #a0b4c0;
+    font-weight: bold;
+    text-decoration: none;
+}
+.register-link:hover{
+    text-decoration: underline;
+}
+div.reg-area > input.btn{
+
+}
+div.reg-area > input.form-control{
+    float: none;
+    background: white;
+    padding: 0 8px;
+    font-weight: normal;
+    margin-left: 10px;
+    width: 50%;
+    cursor: text;
+    color: #333f4d;
+}
+div.reg-area > button.circle-btn{
+    background: #a0b4c0;
+    border: none;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 50%;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    outline: none;
+    padding: 0 9px;
+}
+
+.register-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #F0F3F3;
+    z-index: 50;
+}
+.reg-container{
+    margin: 30px auto;
+    width: 400px;
+    text-align: center;
+}
+.reg-container h2{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.reg-container table{
+    margin-bottom: 15px;
+}
+.reg-container table td{
+    padding: 4px;
+    text-align: left;
 }

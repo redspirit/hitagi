@@ -301,18 +301,19 @@ exports.sing_in_guest = function(s, d, callback){
     if(!d.room)
         return callback(errors.roomIdNotSet);
 
+
     data.User.register_guest(d.code, d.nick, s.ip, function(err, user){
+
+        if(err)
+            return callback(err);
 
         var guest = user.clearGuest();
 
         /*
         data.Room.info(d.room, function(err, room){
-
             room.pushUser(user._id);
-
         });
         */
-
 
         s.setUser(user._id);
         s.user = user;
@@ -327,5 +328,26 @@ exports.sing_in_guest = function(s, d, callback){
 
     });
 
+
+};
+
+exports.sing_in = function(s, d, callback){
+
+    if(!d.email)
+        return callback(errors.noEmail);
+
+    if(!d.nick)
+        return callback(errors.noUserNick);
+
+    if(!d.password)
+        return callback(errors.noPassword);
+
+    if(!d.room)
+        return callback(errors.roomIdNotSet);
+
+
+    console.log('sign in', d);
+
+    callback({error: '123'});
 
 };

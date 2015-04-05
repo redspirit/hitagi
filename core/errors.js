@@ -18,8 +18,9 @@ module.exports = {
     roomNotFound: {error: 'Указанная комната не найдена', code: 12},
     noGuestCode: {error: 'Нет кода для регистрации гостя', code: 13},
     noChatUser: {error: 'Пользователь чата не определен', code: 14},
-    emptyMessage: {error: 'Пустое сообщение в комнату', code: 15}
-
-
+    emptyMessage: {error: 'Пустое сообщение в комнату', code: 15},
+    noGuestNick: {error: 'Гость не указал свой ник', code: 16},
+    noUserNick: {error: 'Пользователь не указал свой ник', code: 17},
+    noEmail: {error: 'Не указан Email', code: 18}
 
 };
