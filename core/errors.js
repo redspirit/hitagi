@@ -21,6 +21,7 @@ module.exports = {
     emptyMessage: {error: 'Пустое сообщение в комнату', code: 15},
     noGuestNick: {error: 'Гость не указал свой ник', code: 16},
     noUserNick: {error: 'Пользователь не указал свой ник', code: 17},
-    noEmail: {error: 'Не указан Email', code: 18}
+    noEmail: {error: 'Не указан Email', code: 18},
+    busyNick: {error: 'Указанный ник занят другим участником', code: 19}
 
 };

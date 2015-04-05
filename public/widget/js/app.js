@@ -81,9 +81,9 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             return alert('Пароли должны совпадать');
 
 
-        ws.send('sing_in', {
+        ws.send('register_member', {
             email: form.email,
-            nick: form.nick,
+            name: form.nick,
             password: form.password,
             room: $scope.roomId
         }, function(userInfo){
@@ -98,10 +98,9 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
             $scope.isAuth = true;
             $scope.me = userInfo;
+            $scope.showRegisterScreen(0);
             $scope.$apply();
         });
-
-
 
     };
 
@@ -120,33 +119,65 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             $scope.room = room;
 
 
+            // пытаемся авторизоваться после подключения к комнате
+            var userData = tools.getUserData();
             var code = localStorage['guestCode'];
-            if(!code) {
+
+
+            if(userData) {
+                // авторизация учатника
+
+                ws.send('sing_in', userData, function(userInfo){
+
+                    if(userInfo.error) {
+
+                        $scope.isAuth = false;
+                        console.error(userInfo.error);
+
+                    } else {
+
+                        $scope.isAuth = true;
+                        $scope.me = userInfo;
+
+                    }
+
+                    $scope.splashScreen = false;
+                    $scope.$apply();
+                });
+
+            } else if(code) {
+                // авторизация гостя
+
+                ws.send('sing_in_guest', {
+                    code: code,
+                    room: $scope.roomId
+                }, function(userInfo){
+
+                    if(userInfo.error) {
+
+                        $scope.isAuth = false;
+                        console.error(userInfo.error);
+
+                    } else {
+
+                        $scope.isAuth = true;
+                        $scope.me = userInfo;
+
+                    }
+
+                    $scope.splashScreen = false;
+                    $scope.$apply();
+                });
+
+
+            } else {
+                // данных для авторизации нет
+
                 $scope.splashScreen = false;
                 $scope.isAuth = false;
                 return $scope.$apply();
+
             }
-
-            ws.send('sing_in_guest', {
-                code: code,
-                room: $scope.roomId
-            }, function(userInfo){
-
-                if(userInfo.error) {
-
-                    $scope.isAuth = false;
-                    console.error(userInfo.error);
-
-                } else {
-
-                    $scope.isAuth = true;
-                    $scope.me = userInfo;
-
-                }
-
-                $scope.splashScreen = false;
-                $scope.$apply();
-            });
 
         });
 

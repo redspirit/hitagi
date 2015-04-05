@@ -118,6 +118,36 @@ UserSchema.statics.register_guest = function(code, nick, ip, cb){
 
 };
 
+UserSchema.statics.register_member = function(data, cb) {
+    var User = this;
+
+    User.findOne({'$or': [{email: data.email}, {name: data.name}]}, function(err, checkUser){
+
+        if(checkUser) {
+
+            if(checkUser.email == data.email)
+               return cb(errors.busyEmail, null);
+
+            if(checkUser.name == data.name)
+               return cb(errors.busyNick, null);
+
+        }
+
+        var user = new User({
+            name: data.name,
+            status: CONST.USER_STATUS_REGULAR,
+            reg_date: Date.now(),
+            email: data.email,
+            api_key: tools.ramdomString(12),
+            email_code: tools.ramdomString(24)
+        });
+
+        user.save(cb);
+
+    });
+
+};
+
 UserSchema.statics.confirm = function(code, cb){
     var User = this;
 

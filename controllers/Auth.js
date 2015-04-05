@@ -328,7 +328,6 @@ exports.sing_in_guest = function(s, d, callback){
 
     });
 
-
 };
 
 exports.sing_in = function(s, d, callback){
@@ -336,18 +335,47 @@ exports.sing_in = function(s, d, callback){
     if(!d.email)
         return callback(errors.noEmail);
 
-    if(!d.nick)
-        return callback(errors.noUserNick);
-
     if(!d.password)
         return callback(errors.noPassword);
 
-    if(!d.room)
-        return callback(errors.roomIdNotSet);
 
 
-    console.log('sign in', d);
 
-    callback({error: '123'});
+
+    callback({error: 123});
+
+    console.log('Member sign-in');
+
+};
+
+exports.register_member = function(s, d, callback){
+
+    var name = d.name;
+    var email = d.email;
+    var password = d.password;
+
+    if(!name)
+        return callback(errors.noUsername);
+
+    if(!tools.validateEmail(email))
+        return callback(errors.invalidEmail);
+
+    if(!password)
+        return callback(errors.noPassword);
+
+
+
+    data.User.register_member(d, function(err, user){
+
+        if(err)
+            return res.send(err);
+
+        console.log('Регитстрация участника', user.name);
+
+        callback(user.clearMember());
+
+    });
+
+
 
 };

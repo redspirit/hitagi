@@ -274,10 +274,18 @@ function ws_paths(routes){
 
         ws.on('message', function(message) {
 
+            var secure = message.substr(message.length-1,1) == '=';
+            var json;
+
             try {
-                var json = JSON.parse(message);
+
+                if(secure)
+                    json = JSON.parse(tools.decode(message));
+                else
+                    json = JSON.parse(message);
+
             } catch (e) {
-                return;
+                return console.error('Входящее сообщение не удалось распарсить');
             }
 
             if(!json.e)
