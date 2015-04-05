@@ -38,6 +38,21 @@ b{
     bottom: 0;
     padding-left: 0;
     background: #fff;
+    z-index: 10;
+}
+
+.splash-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #F0F3F3;
+    z-index: 100;
+}
+.circles{
+    left: 50%;
+    margin-top: 15%;
 }
 
 .chat-area{
@@ -100,10 +115,11 @@ b{
 }
 .chat-area ul .message .msg-time{
     position: absolute;
-    top:16px;
+    top:12px;
     right: 15px;
     color: #738ba3;
     font-size: 9px;
+    cursor: pointer;
 }
 .input-area{
     background: #e4eaee;
@@ -121,6 +137,7 @@ b{
     border-radius: 5px;
     overflow: hidden;
     float: left;
+    width: 80%;
 }
 .input-area .input-wrapper input{
     height: 30px;
@@ -130,13 +147,17 @@ b{
     padding: 0 10px;
     outline: none;
     color: #5D7185;
-    min-width: 390px;
+    width: 100%;
 }
 .input-area .input-wrapper i{
     font-size: 18px;
     color: #a0b4c0;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     cursor: pointer;
+    /* float: right; */
+    position: absolute;
+    margin-top: -23px;
+    margin-left: 74%;
 }
 .input-area > input{
     background: #a0b4c0;

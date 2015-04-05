@@ -6,8 +6,7 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
     $scope.isAuth = false;
     $scope.me = {};
     $scope.users = {};
-
-    console.log('location', $location.search());
+    $scope.splashScreen = true;
 
     if(!tools.isFramed()) {
         alert('Запущено не во фрейме!');
@@ -75,9 +74,6 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             $scope.room = room;
 
 
-            $scope.splashScreen = false;
-            $scope.$apply();
-            
             var code = localStorage['guestCode'];
             if(!code)
                 return false;
@@ -86,11 +82,20 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
                 code: code,
                 room: $scope.roomId
             }, function(userInfo){
-                if(userInfo.error)
-                    return alert(userInfo.error);
 
-                $scope.isAuth = true;
-                $scope.me = userInfo;
+                if(userInfo.error) {
+
+                    $scope.isAuth = false;
+                    console.error(userInfo.error);
+
+                } else {
+
+                    $scope.isAuth = true;
+                    $scope.me = userInfo;
+
+                }
+
+                $scope.splashScreen = false;
                 $scope.$apply();
             });
 
@@ -108,10 +113,10 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         $scope.room.users.push(user);
 
         $scope.room.messages.push({
-            type: 'joined',
+            type: 'log',
             n: user.name,
             d: Date.now(),
-            t: 'пользователь зашел в чат'
+            t: 'зашел в чат'
         });
 
         $scope.$apply();
@@ -126,10 +131,10 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         $scope.room.users = tools.deleteFromUsers($scope.room.users, user._id);
 
         $scope.room.messages.push({
-            type: 'leaved',
+            type: 'log',
             n: user.name,
             d: moment().format(),
-            t: 'пользователь вышел из чата'
+            t: 'вышел из чата'
         });
 
         $scope.$apply();

@@ -7,9 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/spinner.css">
     <link rel="stylesheet" href="/_assets/css/perfect-scrollbar.min.css">
 </head>
 <body>
+
+<script id="user-message" type="text/ng-template">
+    <div class="name">
+        <span class="">{{mess.n}}</span>
+    </div>
+    <div class="message">
+        <p>{{mess.t}}</p>
+        <span class="msg-time" title="{{mess.d | date:'dd MMMM yyyy'}}">{{mess.d | date:'H:mm:ss'}}</span>
+    </div>
+</script>
+
+<script id="log-message" type="text/ng-template">
+
+    <div class="message">
+        <p><b>{{mess.n}}</b>: {{mess.t}}</p>
+        <span class="msg-time">{{mess.d | date:'H:mm:ss'}}</span>
+    </div>
+
+</script>
+
 
 
 <div class="window-area">
@@ -17,26 +38,30 @@
         <div class="chat-list" autoscroll-down>
             <ul>
 
-                <li ng-repeat="mess in room.messages | orderBy:'d'" ng-class="{me: mess.u == me._id}">
-                    <div class="name">
-                        <span class="">{{mess.n}}</span>
-                    </div>
-                    <div class="message">
-                        <p>{{mess.t}}</p>
-                        <span class="msg-time">5:00 pm</span>
-                    </div>
+                <li ng-repeat="mess in room.messages | orderBy:'d'"
+                        ng-class="{me: mess.u == me._id}"
+                        ng-include="mess.type == 'log' ? 'log-message' : 'user-message'">
                 </li>
 
             </ul>
         </div>
         <div class="input-area">
-            <div class="input-wrapper">
+
+            <div class="input-wrapper" ng-if="isAuth">
                 <input type="text" placeholder="Введите ваше сообщение" ng-model="form.message" ng-enter="message(form.message)">
                 <i class="fa fa-smile-o"></i>
-                <i class="fa fa-paperclip"></i>
             </div>
-            <input type="button" value="Ввод" class="send-btn">
+            <input type="button" value="Отправить" ng-click="message(form.message)" class="send-btn">
+
         </div>
+
+        <div class="input-area" ng-if="!isAuth">
+
+            <label>Укажите свой ник, чтобы начать общение:</label>
+            <input type="text" class="form-control" placeholder="Ник" ng-model="form.newNick" ng-enter="singIn(form.newNick)"/>
+
+        </div>
+
     </div>
     <div class="right-tabs">
 
@@ -56,26 +81,12 @@
 </div>
 
 
-
-<!--
-<div class="message-pane">
-
-    <input ng-show="isAuth" type="text" class="form-control" placeholder="Введите ваше сообщение" ng-model="form.message" ng-enter="message(form.message)"/>
-
-    <div ng-show="!isAuth">
-
-        <label>Введите свой ник, чтобы начать общение:</label>
-        <input type="text" class="form-control" placeholder="Ник" ng-model="form.newNick" ng-enter="singIn(form.newNick)"/>
-
+<div class="splash-screen" ng-if="splashScreen">
+    <div class="circles">
+        Loading...
     </div>
-
 </div>
 
-<div class="splash-screen" ng-show="splashScreen">
-    Загрузка...
-</div>
-
--->
 
 <script src="/_assets/js/vendor/reconnecting-websocket.min.js"></script>
 <script src="/_assets/js/vendor/underscore-min.js"></script>
