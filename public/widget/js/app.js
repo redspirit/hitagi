@@ -86,20 +86,24 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             name: form.nick,
             password: form.password,
             room: $scope.roomId
-        }, function(userInfo){
+        }, function(token){
 
-            if(userInfo.error)
-                return alert(userInfo.error);
+            if(token.error)
+                return alert(token.error);
 
-            tools.saveUserData({
-                email: form.email,
-                password: form.password
-            });
 
+            tools.saveUserData(token);
+
+
+
+
+            /*
             $scope.isAuth = true;
             $scope.me = userInfo;
             $scope.showRegisterScreen(0);
             $scope.$apply();
+            */
+
         });
 
     };

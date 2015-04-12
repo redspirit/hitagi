@@ -22,6 +22,7 @@ module.exports = {
     noGuestNick: {error: 'Гость не указал свой ник', code: 16},
     noUserNick: {error: 'Пользователь не указал свой ник', code: 17},
     noEmail: {error: 'Не указан Email', code: 18},
-    busyNick: {error: 'Указанный ник занят другим участником', code: 19}
+    busyNick: {error: 'Указанный ник занят другим участником', code: 19},
+    noAccessToken: {error: 'Не указан токен доступа', code: 20}
 
 };

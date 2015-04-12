@@ -170,6 +170,12 @@ UserSchema.statics.byToken = function(token, cb){
     User.findOne({'token.access_token': token, status: {'$gte': CONST.USER_STATUS_REGULAR}}, cb);
 };
 
+UserSchema.statics.byTokenMember = function(token, cb){
+    var User = this;
+    // для всех типов пользователей
+    User.findOne({'token.access_token': token}, cb);
+};
+
 UserSchema.methods.forgot_password = function(cb){
     var user = this;
 

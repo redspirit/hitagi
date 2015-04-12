@@ -332,19 +332,18 @@ exports.sing_in_guest = function(s, d, callback){
 
 exports.sing_in = function(s, d, callback){
 
-    if(!d.email)
-        return callback(errors.noEmail);
-
-    if(!d.password)
-        return callback(errors.noPassword);
+    if(!d.token)
+        return callback(errors.noAccessToken);
 
 
+    data.User.byTokenMember(d.token, function(err, user){
 
+        console.log('Авторизация пользователя чата', user.name);
 
+        callback(user.clearMember());
 
-    callback({error: 123});
+    });
 
-    console.log('Member sign-in');
 
 };
 
@@ -370,12 +369,21 @@ exports.register_member = function(s, d, callback){
         if(err)
             return res.send(err);
 
+
+        user.token = {
+            access_token: tools.ramdomString(24),
+            refresh_token: tools.ramdomString(16),
+            expires_in: 86400
+        };
+
+        user.save(function(err, doc){
+
+            callback(user.token);
+
+        });
+
         console.log('Регитстрация участника', user.name);
 
-        callback(user.clearMember());
-
     });
-
-
 
 };
