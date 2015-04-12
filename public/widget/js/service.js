@@ -30,20 +30,10 @@ app.service('ws', function($http, tools){
 
 
     connection.onmessage = function (message) {
-
-        var mdata = message.data || '';
-        var secure = mdata.substr(mdata.length-1,1) == '=';
-        var json;
-
         try {
-
-            if(secure)
-                json = JSON.parse(tools.stringDecode(mdata));
-            else
-                json = JSON.parse(mdata);
-
+            var json = JSON.parse(message.data);
         } catch (e) {
-            console.log('This doesn look like a valid JSON: ', mdata);
+            console.log('This doesn look like a valid JSON: ', message.data);
             return;
         }
 
@@ -61,7 +51,7 @@ app.service('ws', function($http, tools){
     };
 
 
-    self.send = function(name, data, callback, secure){
+    self.send = function(name, data, callback){
 
         var message = {};
 
@@ -74,13 +64,7 @@ app.service('ws', function($http, tools){
         message.e = name;
         message.d = data;
 
-        var sendString = JSON.stringify(message);
-
-        if(secure)
-            connection.send(tools.stringEncode(sendString));
-        else
-            connection.send(sendString);
-
+        connection.send(JSON.stringify(message));
         console.log('WS send >>', name, data);
     };
 
@@ -152,19 +136,13 @@ app.service('tools', function($http){
     };
 
     self.getUserData = function() {
-
         var ret = {};
-
         try {
-
             ret = JSON.parse(self.stringDecode(localStorage['userData']));
-
         } catch (e){
 
         }
-
         return ret;
-
     };
 
 });

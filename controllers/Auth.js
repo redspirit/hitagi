@@ -251,13 +251,13 @@ exports.sing_out = function(req, res){
 
 };
 
-exports.socket_connect = function(s, d){
+exports.socket_connect = function(s){
 
     console.log('Сокет подключен', s.ip);
 
 };
 
-exports.socket_disconnect = function(s, d){
+exports.socket_disconnect = function(s){
 
     console.log('Сокет отключен', s.ip);
 
@@ -328,57 +328,59 @@ exports.sing_in_guest = function(s, d, callback){
 
     });
 
+
 };
 
 exports.sing_in = function(s, d, callback){
 
-    if(!d.token)
-        return callback(errors.noAccessToken);
+    if(!d.email)
+        return callback(errors.noEmail);
+
+    if(!d.password)
+        return callback(errors.noPassword);
 
 
-    data.User.byTokenMember(d.token, function(err, user){
+    data.User.getByEmail(d.email, function(err, user){
 
-        console.log('Авторизация пользователя чата', user.name);
+        if(!user)
+            return callback(errors.userNotFound);
+
+        if(user.password != tools.sha1(d.password))
+            return callback(errors.wrongPassword);
+
+        s.user = user;
+        s.setUser(user._id);
 
         callback(user.clearMember());
 
-    });
+        console.log('Учатник успешно авторизовался', user.name);
 
+    });
 
 };
 
 exports.register_member = function(s, d, callback){
 
-    var name = d.name;
-    var email = d.email;
-    var password = d.password;
-
-    if(!name)
+    if(!d.name)
         return callback(errors.noUsername);
 
-    if(!tools.validateEmail(email))
+    if(!tools.validateEmail(d.email))
         return callback(errors.invalidEmail);
 
-    if(!password)
+    if(!d.password)
         return callback(errors.noPassword);
 
 
-
-    data.User.register_member(d, function(err, user){
+    data.User.register(d, function(err, user){
 
         if(err)
-            return res.send(err);
+            return callback(err);
 
-
-        user.token = {
-            access_token: tools.ramdomString(24),
-            refresh_token: tools.ramdomString(16),
-            expires_in: 86400
-        };
-
+        user.email = d.email;
+        user.password = tools.sha1(d.password);
         user.save(function(err, doc){
 
-            callback(user.token);
+            callback(doc);
 
         });
 

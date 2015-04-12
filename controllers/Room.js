@@ -103,10 +103,56 @@ exports.chat_message = function(s, d, callback) {
 
         room.pushMessage(text, s.user, function(err, mess){
 
-            s.toRoom(room._id.toString(), 'chat', _.omit(mess.toObject(), ['__v', 'r']));
+            s.toRoom(room._id, 'chat', _.omit(mess.toObject(), ['__v', 'r']));
 
         });
 
     });
 
 };
+
+exports.join = function(s, d, callback) {
+
+    if(!s.user)
+        return callback(errors.noChatUser);
+
+    if(!d.room)
+        return callback(errors.roomIdNotSet);
+
+    var getInfo = d.info ? true : false;
+
+    data.Room.info(d.room, function(err, room){
+
+        if(!room)
+            return callback(errors.roomNotFound);
+
+        s.join(room._id);
+        s.toRoom(room._id, 'joined', user.clearMember());
+
+
+        // отправляем только описание комнаты
+        if(!getInfo)
+            return callback(room);
+
+
+        // отправляем историю и список юзеров комнаты
+        return room.history({limit: 30}, function(err, messages){
+
+            data.User.usersList(s.roomUsers(room._id), function(err, users){
+
+                var roomObj = room.toObject();
+                roomObj.messages = messages;
+                roomObj.users = users;
+
+                callback(roomObj);
+
+            });
+
+        });
+
+    });
+
+};
+
+
+

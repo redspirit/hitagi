@@ -84,25 +84,37 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
         ws.send('register_member', {
             email: form.email,
             name: form.nick,
-            password: form.password,
-            room: $scope.roomId
-        }, function(token){
+            password: form.password
+        }, function(newUser){
 
-            if(token.error)
-                return alert(token.error);
-
-
-            tools.saveUserData(token);
+            if(newUser.error)
+                return alert(newUser.error);
 
 
+            tools.saveUserData({
+                email: newUser.email,
+                password: form.password
+            });
 
 
-            /*
-            $scope.isAuth = true;
-            $scope.me = userInfo;
-            $scope.showRegisterScreen(0);
-            $scope.$apply();
-            */
+            ws.send('sing_in', {
+                email: newUser.email,
+                password: form.password
+            }, function(user){
+
+                if(user.error)
+                    return alert(user.error);
+
+                $scope.isAuth = true;
+                $scope.me = user;
+
+                $scope.showRegisterScreen(false);
+
+                // todo джойнимся к комнате
+
+                $scope.$apply();
+
+            });
 
         });
 
@@ -123,34 +135,35 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
             $scope.room = room;
 
 
-            // пытаемся авторизоваться после подключения к комнате
-            var userData = tools.getUserData();
             var code = localStorage['guestCode'];
+            var userData = tools.getUserData();
 
+            if(userData.email){
 
-            if(userData) {
-                // авторизация учатника
+                // auth user
 
-                ws.send('sing_in', userData, function(userInfo){
+                ws.send('sing_in', {
+                    email: userData.email,
+                    password: userData.password
+                }, function(user){
 
-                    if(userInfo.error) {
+                    if(user.error)
+                        return alert(user.error);
 
-                        $scope.isAuth = false;
-                        console.error(userInfo.error);
-
-                    } else {
-
-                        $scope.isAuth = true;
-                        $scope.me = userInfo;
-
-                    }
+                    $scope.isAuth = true;
+                    $scope.me = user;
 
                     $scope.splashScreen = false;
+
+                    // todo джойнимся к комнате
+
                     $scope.$apply();
+
                 });
 
             } else if(code) {
-                // авторизация гостя
+
+                // auth guest
 
                 ws.send('sing_in_guest', {
                     code: code,
@@ -158,15 +171,11 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
                 }, function(userInfo){
 
                     if(userInfo.error) {
-
                         $scope.isAuth = false;
                         console.error(userInfo.error);
-
                     } else {
-
                         $scope.isAuth = true;
                         $scope.me = userInfo;
-
                     }
 
                     $scope.splashScreen = false;
@@ -175,11 +184,12 @@ app.controller('MainCtrl', function($scope, $http, $location, tools, ws){
 
 
             } else {
-                // данных для авторизации нет
+
+                // no auth
 
                 $scope.splashScreen = false;
                 $scope.isAuth = false;
-                return $scope.$apply();
+                $scope.$apply();
 
             }
 

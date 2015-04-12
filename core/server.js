@@ -74,6 +74,7 @@ function ws_paths(routes){
             if(!ws.user)
                 return false;
 
+            roomName = roomName.toString();
             var userId = ws.user._id.toString();
             var arr = userRooms[roomName];
 
@@ -95,6 +96,7 @@ function ws_paths(routes){
             if(!ws.user)
                 return false;
 
+            roomName = roomName.toString();
             var userId = ws.user._id.toString();
             var arr = userRooms[roomName];
             var idx;
@@ -163,6 +165,7 @@ function ws_paths(routes){
         ws.toRoom = function(room, name, data, exclusion){
 
             //var userId = ws.user ? ws.user._id.toString() : null;
+            room = room.toString();
             var userId = exclusion ? exclusion.toString() : null;
             var arr = userRooms[room];
 
@@ -179,7 +182,7 @@ function ws_paths(routes){
         };
         
         ws.roomUsers = function(room){
-            return userRooms[room];
+            return userRooms[room.toString()];
         };
 
         // зарегистрировать сокет указанного юзера
@@ -274,18 +277,10 @@ function ws_paths(routes){
 
         ws.on('message', function(message) {
 
-            var secure = message.substr(message.length-1,1) == '=';
-            var json;
-
             try {
-
-                if(secure)
-                    json = JSON.parse(tools.decode(message));
-                else
-                    json = JSON.parse(message);
-
+                var json = JSON.parse(message);
             } catch (e) {
-                return console.error('Входящее сообщение не удалось распарсить');
+                return;
             }
 
             if(!json.e)

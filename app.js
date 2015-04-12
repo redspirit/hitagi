@@ -35,15 +35,17 @@ var routes = {
 };
 
 var ws_routes = {
-    'connect':                          'auth.socket_connect',         // подключение к сокету
-    'disconnect':                       'auth.socket_disconnect',      // отключение от сокета
+    'connect':                          'auth.socket_connect',          // подключение к сокету
+    'disconnect':                       'auth.socket_disconnect',       // отключение от сокета
 
-    'widget_init':                      'room.widget_init',
-    'sing_in_guest':                    'auth.sing_in_guest',
-    'sing_in':                          'auth.sing_in',
-    'register_member':                  'auth.register_member',
+    'widget_init':                      'room.widget_init',             // получение сообщений и юзеров комнаты виджета
+    'sing_in_guest':                    'auth.sing_in_guest',           // заходим как гость в указанную комнату
+    'register_member':                  'auth.register_member',         // регистрация участника чата
+    'sing_in':                          'auth.sing_in',                 // авторизируемся с логином и паролем
 
-    'chat':                             'room.chat_message'
+    'chat':                             'room.chat_message',            // отправить сообщение в комнату
+
+    'join':                             'room.join'                     // подключиться к указанной комнате
 };
 
 server.Start(routes, ws_routes);

@@ -23,6 +23,7 @@ module.exports = {
     noUserNick: {error: 'Пользователь не указал свой ник', code: 17},
     noEmail: {error: 'Не указан Email', code: 18},
     busyNick: {error: 'Указанный ник занят другим участником', code: 19},
-    noAccessToken: {error: 'Не указан токен доступа', code: 20}
+    noAccessToken: {error: 'Не указан токен доступа', code: 20},
+    wrongPassword: {error: 'Указан неверный пароль пользователя', code: 21}
 
 };
